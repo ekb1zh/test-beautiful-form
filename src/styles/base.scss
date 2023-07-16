@@ -8,6 +8,19 @@
   box-sizing: inherit;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+
+  background-image: url('../images/global-background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
 button {
   border: none;
   background: none;
