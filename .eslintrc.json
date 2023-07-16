@@ -1,0 +1,13 @@
+/*
+  https://create-react-app.dev/docs/setting-up-your-editor#extending-or-replacing-the-default-eslint-config
+*/
+{
+  "extends": ["react-app", "react-app/jest"],
+  "rules": {},
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "rules": {}
+    }
+  ]
+}
