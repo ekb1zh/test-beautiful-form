@@ -1,6 +1,7 @@
 :root {
   box-sizing: border-box;
   height: 100%;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 *,
@@ -9,17 +10,10 @@
   box-sizing: inherit;
 }
 
-body {
-  height: 100%;
-  font-family: 'Ubuntu', sans-serif;
-}
-
+html,
+body,
 #root {
-  height: 100%;
-
-  background-image: url('../images/global-background.jpg');
-  background-size: cover;
-  background-position: center;
+  height: inherit;
 }
 
 button {

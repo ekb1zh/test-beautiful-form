@@ -10,7 +10,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   onInput,
 }) => {
-  return <input className={classes.root} />
+  return <input className={classes.root} value='value' />
 }
 
 export default Input

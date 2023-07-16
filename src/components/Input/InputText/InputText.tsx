@@ -14,9 +14,8 @@ const InputText: React.FC<React.PropsWithChildren> = ({ children }) => {
         <Label>Label</Label>
 
         <Input />
-
-        <ErrorNote>ErrorNote</ErrorNote>
       </Container>
+      <ErrorNote>ErrorNote</ErrorNote>
     </div>
   )
 }
