@@ -1,0 +1,60 @@
+$transition: 0.2s;
+
+.root {
+  .inputContainer {
+    position: relative;
+
+    .input {
+      width: 100%;
+      padding: 26px 10px 8px;
+      border-radius: 6px;
+      font-size: 1.4rem;
+      background: rgba(255, 255, 255, 0.5);
+      transition: $transition;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      &:focus {
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .label {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+
+      transition: $transition;
+      padding: 8px 10px;
+
+      font-size: 1.8rem;
+      color: grey;
+      cursor: text;
+    }
+
+    // !!!!!!!!! TODO: Add js check for empty value, and add new className
+    .input:focus + .label {
+      top: 0;
+      transform: none;
+
+      font-size: 0.8rem;
+      color: black;
+      cursor: default;
+
+      font-weight: 500;
+    }
+
+    .showPasBtn {
+      position: absolute;
+      right: 0;
+
+      height: 100%;
+    }
+  }
+
+  .error {
+  }
+}
