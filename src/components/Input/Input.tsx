@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from 'src/components/Input2/Input.module.scss'
+import styles from 'src/components/Input/Input.module.scss'
 
 const INPUT_ID = 'input-id'
 
