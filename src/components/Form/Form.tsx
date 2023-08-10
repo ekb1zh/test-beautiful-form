@@ -1,9 +1,9 @@
 import React from 'react'
 
-import classes from 'src/components/Form/Form.module.scss'
+import styles from 'src/components/Form/Form.module.scss'
 
 const Form: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <form className={classes.root}>{children}</form>
+  return <form className={styles.Root}>{children}</form>
 }
 
 export default Form

@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
+import { StringGenerator } from 'src/utils'
 import styles from 'src/components/Input/Input.module.scss'
 
-const INPUT_ID = 'input-id'
+const stringGenerator = new StringGenerator({
+  allowedChars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+  defaultSize: 4,
+})
 
-const Input: React.FC<React.PropsWithChildren> = ({ children }) => {
+const Input: React.FC = () => {
+  const inputId = useMemo(() => stringGenerator.next(), [])
+
   return (
-    <div className={styles.root}>
-      <div className={styles.inputContainer}>
-        <input className={styles.input} id={INPUT_ID} />
-        <label className={styles.label} htmlFor={INPUT_ID}>
+    <div className={styles.RootContainer}>
+      <div className={styles.InnerContainer}>
+        <input className={styles.Input} id={inputId} />
+        <label className={styles.Label} htmlFor={inputId}>
           label
         </label>
-        <button type='button' className={styles.showPasBtn}>
+        <button type='button' className={styles.EyeButton}>
           show pass
         </button>
       </div>
-      <span className={styles.error}>Error text</span>
+      <span className={styles.ErrorMessage}>Error text</span>
     </div>
   )
 }
