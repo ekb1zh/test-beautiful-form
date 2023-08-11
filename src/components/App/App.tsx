@@ -1,34 +1,37 @@
 import React, { useState } from 'react'
 
-import Main from 'src/components/Main'
 import Input from 'src/components/Input'
-import Form from 'src/components/Form'
 import Button from 'src/components/Button'
+import styles from 'src/components/App/App.module.scss'
 
 const App: React.FC = () => {
   const [loginValue, setLoginValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
 
   return (
-    <Main>
-      <Form>
-        <Input
-          label='Login'
-          type='text'
-          value={loginValue}
-          onChange={setLoginValue}
-        />
+    <main className={styles.Main}>
+      <div className={styles.Container}>
+        <h1 className={styles.Header}>Sign In</h1>
 
-        <Input
-          label='Password'
-          type='password'
-          value={passwordValue}
-          onChange={setPasswordValue}
-        />
+        <form className={styles.Form}>
+          <Input
+            label='Login'
+            type='text'
+            value={loginValue}
+            onChange={setLoginValue}
+          />
 
-        <Button>Sing In</Button>
-      </Form>
-    </Main>
+          <Input
+            label='Password'
+            type='password'
+            value={passwordValue}
+            onChange={setPasswordValue}
+          />
+
+          <Button>Sing In</Button>
+        </form>
+      </div>
+    </main>
   )
 }
 

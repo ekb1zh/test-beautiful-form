@@ -1,0 +1,60 @@
+.Main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  padding: 0 32px;
+
+  background-image: url('../../images/main-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-color: lightsteelblue;
+}
+
+.Header {
+  text-align: center;
+  color: rgb(42, 42, 42);
+  margin: 32px 0;
+}
+
+.Container {
+  min-height: 60%;
+  width: 400px;
+
+  padding: 32px;
+  border-radius: 8px;
+
+  background: rgb(230, 241, 255, 70%);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  & > * {
+    width: 100%;
+  }
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  & > * {
+    width: 100%;
+  }
+
+  & > :not(:first-child) {
+    margin-top: 16px;
+  }
+
+  & > :last-child {
+    margin-top: 32px;
+    width: 60%;
+  }
+}
