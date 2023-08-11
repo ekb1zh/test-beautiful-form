@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
+import Icon from 'src/components/Icon'
 import { StringGenerator } from 'src/utils'
 import styles from 'src/components/Input/Input.module.scss'
 import * as T from 'src/components/Input/types'
@@ -9,18 +10,27 @@ const stringGenerator = new StringGenerator({
   defaultSize: 4,
 })
 
-const Input: React.FC<T.InputProps> = ({ type = 'password' }) => {
+const Input: React.FC<T.InputProps> = ({
+  value,
+  onChange,
+  label,
+  type,
+  errorText,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [isValueVisible, setIsValueVisible] = useState(type !== 'password')
-  const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const [classes, setClasses] = useState(styles)
 
   const id = useMemo(() => stringGenerator.next(), [])
+  const eyeIcon = useMemo(
+    () => (isValueVisible ? <Icon.EyeClose /> : <Icon.EyeOpen />),
+    [isValueVisible],
+  )
 
   const onChangeInput: React.InputHTMLAttributes<HTMLInputElement>['onChange'] =
-    ({ target: { value } }) => setValue(value)
+    ({ target: { value } }) => onChange(value)
 
   const onFocusInput = () => setIsFocused(true)
   const onBlurInput = () => setIsFocused(false)
@@ -30,7 +40,7 @@ const Input: React.FC<T.InputProps> = ({ type = 'password' }) => {
       /*
         Prevent focus out
       */
-      if (document.activeElement === inputRef.current) {
+      if (inputRef.current === document.activeElement) {
         event.preventDefault()
       }
 
@@ -68,11 +78,13 @@ const Input: React.FC<T.InputProps> = ({ type = 'password' }) => {
   }, [isFocused, value.length])
 
   return (
-    <div className={classes.RootContainer}>
+    <div>
       <div className={classes.InnerContainer}>
-        <label className={classes.Label} htmlFor={id}>
-          Label
-        </label>
+        {typeof label === 'string' && (
+          <label className={classes.Label} htmlFor={id}>
+            {label}
+          </label>
+        )}
 
         <input
           ref={inputRef}
@@ -90,12 +102,14 @@ const Input: React.FC<T.InputProps> = ({ type = 'password' }) => {
             className={classes.EyeButton}
             onMouseDown={onMouseDownEyeButton}
           >
-            show pass
+            {eyeIcon}
           </button>
         )}
       </div>
 
-      <span className={classes.ErrorMessage}>Error text</span>
+      {typeof errorText === 'string' && (
+        <span className={classes.ErrorMessage}>{errorText}</span>
+      )}
     </div>
   )
 }
