@@ -20,7 +20,15 @@ window.fetch = async (route, options) => {
     return new Response(JSON.stringify(response))
   }
 
-  const { body } = options
+  const { method, body } = options
+
+  if (method !== 'POST') {
+    const response: Schema.Api.GeneralResponseError = {
+      error: `Request has incorrect method: '${method}'`,
+    }
+
+    return new Response(JSON.stringify(response))
+  }
 
   if (!body) {
     const response: Schema.Api.GeneralResponseError = {
