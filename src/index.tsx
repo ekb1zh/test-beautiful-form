@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client'
 
 import App from 'src/components/App'
 import 'src/styles/index.scss'
+import 'src/settings'
+import 'src/_mocks'
 
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 
