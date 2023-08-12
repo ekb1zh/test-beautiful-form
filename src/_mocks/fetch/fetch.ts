@@ -1,6 +1,9 @@
 import { StringGenerator } from 'src/utils/StringGenerator'
-import { FAKE_BACKEND_PREFIX, ROUTES } from 'src/_mocks/fetch/constants'
-import * as T from 'src/_mocks/fetch/types'
+import {
+  FAKE_BACKEND_PREFIX,
+  DELAY_BEFORE_RESPONSE,
+  Route,
+} from 'src/_mocks/fetch/constants'
 import * as Schema from 'src/schema'
 
 const stringGenerator = new StringGenerator({
@@ -10,7 +13,7 @@ const stringGenerator = new StringGenerator({
 })
 
 window.fetch = async (route, options) => {
-  await new Promise((resolve) => setTimeout(resolve, 2 * 1000))
+  await new Promise((resolve) => setTimeout(resolve, DELAY_BEFORE_RESPONSE))
 
   if (!options) {
     const response: Schema.Api.GeneralResponseError = {
@@ -38,12 +41,12 @@ window.fetch = async (route, options) => {
     return new Response(JSON.stringify(response))
   }
 
-  switch (route as T.Route) {
-    case ROUTES.SIGN_IN: {
+  switch (route as Schema.Api.Route) {
+    case Route.SignIn: {
       let response: Schema.Api.SignIn.Response
 
       try {
-        const { user }: Schema.Api.SignIn.Request = JSON.parse(body as string)
+        const { user }: Schema.Api.SignIn.Body = JSON.parse(body as string)
         const key = `${FAKE_BACKEND_PREFIX}_${user.email}`
 
         if (typeof localStorage.getItem(key) === 'string') {
@@ -65,11 +68,11 @@ window.fetch = async (route, options) => {
       return new Response(JSON.stringify(response))
     }
 
-    case ROUTES.SIGN_UP: {
+    case Route.SignUp: {
       let response: Schema.Api.SignUp.Response
 
       try {
-        const { user }: Schema.Api.SignUp.Request = JSON.parse(body as string)
+        const { user }: Schema.Api.SignUp.Body = JSON.parse(body as string)
         const key = `${FAKE_BACKEND_PREFIX}_${user.email}`
 
         if (typeof localStorage.getItem(key) === 'string') {

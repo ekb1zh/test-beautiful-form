@@ -4,6 +4,8 @@ export interface User {
 }
 
 export namespace Api {
+  export type Route = SignIn.Route | SignUp.Route
+
   export interface GeneralResponseError {
     error: string
   }
@@ -11,36 +13,42 @@ export namespace Api {
   export namespace SignIn {
     export type Route = '/sign-in'
 
-    export interface Request {
+    export interface Body {
       user: User
     }
 
-    export interface ResponseSuccess {
-      token: string
+    export interface Options {
+      method: 'POST'
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+      body: string
     }
 
-    export interface ResponseError {
-      error: string
+    export interface Response {
+      token?: string
+      error?: string
     }
-
-    export type Response = ResponseSuccess | ResponseError
   }
 
   export namespace SignUp {
     export type Route = '/sign-up'
 
-    export interface Request {
+    export interface Body {
       user: User
     }
 
-    export interface ResponseSuccess {
-      token: string
+    export interface Options {
+      method: 'POST'
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+      body: string
     }
 
-    export interface ResponseError {
-      error: string
+    export interface Response {
+      token?: string
+      error?: string
     }
-
-    export type Response = ResponseSuccess | ResponseError
   }
 }

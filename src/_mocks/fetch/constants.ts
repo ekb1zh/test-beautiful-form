@@ -1,6 +1,7 @@
 export const FAKE_BACKEND_PREFIX = 'FAKE_BACKEND'
+export const DELAY_BEFORE_RESPONSE = 1000
 
-export enum ROUTES {
-  SIGN_IN = '/sign-in',
-  SIGN_UP = '/sign-up',
+export enum Route {
+  SignIn = '/sign-in',
+  SignUp = '/sign-up',
 }
