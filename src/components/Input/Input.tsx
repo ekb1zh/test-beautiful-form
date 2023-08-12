@@ -21,13 +21,34 @@ const Input: React.FC<T.InputProps> = ({
 
   const [isValueVisible, setIsValueVisible] = useState(type !== 'password')
   const [isFocused, setIsFocused] = useState(false)
-  const [classes, setClasses] = useState(styles)
 
   const id = useMemo(() => stringGenerator.next(), [])
   const eyeIcon = useMemo(
     () => (isValueVisible ? <Icon.EyeClose /> : <Icon.EyeOpen />),
     [isValueVisible],
   )
+  const classes = useMemo(() => {
+    const classes = { ...styles }
+
+    /*
+      Update label styles
+    */
+    {
+      const isValueEmpty = value.length === 0
+      let label = classes.Label
+
+      label += ' '
+      label += isFocused
+        ? classes.Label_small
+        : isValueEmpty
+        ? classes.Label_big
+        : classes.Label_small
+
+      classes.Label = label
+    }
+
+    return classes
+  }, [isFocused, value.length])
 
   const onChangeInput: React.InputHTMLAttributes<HTMLInputElement>['onChange'] =
     ({ target: { value } }) => onChange(value)
@@ -54,38 +75,9 @@ const Input: React.FC<T.InputProps> = ({
     setIsValueVisible(type !== 'password')
   }, [type])
 
-  useEffect(() => {
-    const classes = { ...styles }
-
-    /*
-      Update label styles
-    */
-    {
-      const isValueEmpty = value.length === 0
-      let label = classes.Label
-
-      label += ' '
-      label += isFocused
-        ? classes.Label_small
-        : isValueEmpty
-        ? classes.Label_big
-        : classes.Label_small
-
-      classes.Label = label
-    }
-
-    setClasses(classes)
-  }, [isFocused, value.length])
-
   return (
     <div>
       <div className={classes.InnerContainer}>
-        {typeof label === 'string' && (
-          <label className={classes.Label} htmlFor={id}>
-            {label}
-          </label>
-        )}
-
         <input
           ref={inputRef}
           type={isValueVisible ? 'text' : 'password'}
@@ -95,6 +87,12 @@ const Input: React.FC<T.InputProps> = ({
           onFocus={onFocusInput}
           onBlur={onBlurInput}
         />
+
+        {typeof label === 'string' && (
+          <label className={classes.Label} htmlFor={id}>
+            {label}
+          </label>
+        )}
 
         {type === 'password' && (
           <button
