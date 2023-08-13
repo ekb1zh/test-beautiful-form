@@ -98,6 +98,7 @@ const Input: React.FC<T.InputProps> = ({
             type='button'
             className={classes.EyeButton}
             onMouseDown={onMouseDownEyeButton}
+            tabIndex={-1}
           >
             {eyeIcon}
           </button>
