@@ -4,10 +4,31 @@ export interface User {
 }
 
 export namespace Api {
-  export type Route = SignIn.Route | SignUp.Route
+  export type Route = SignUp.Route | SignIn.Route | SignOut.Route | Ping.Route
 
   export interface GeneralResponseError {
     error: string
+  }
+
+  export namespace SignUp {
+    export type Route = '/sign-up'
+
+    export interface Body {
+      user: User
+    }
+
+    export interface Options {
+      method: 'POST'
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+      body: string
+    }
+
+    export interface Response {
+      token?: string
+      error?: string
+    }
   }
 
   export namespace SignIn {
@@ -31,11 +52,11 @@ export namespace Api {
     }
   }
 
-  export namespace SignUp {
-    export type Route = '/sign-up'
+  export namespace SignOut {
+    export type Route = '/sign-out'
 
     export interface Body {
-      user: User
+      token: string
     }
 
     export interface Options {
@@ -47,7 +68,27 @@ export namespace Api {
     }
 
     export interface Response {
-      token?: string
+      error?: string
+    }
+  }
+
+  export namespace Ping {
+    export type Route = '/ping'
+
+    export interface Body {
+      token: string
+    }
+
+    export interface Options {
+      method: 'POST'
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+      body: string
+    }
+
+    export interface Response {
+      pong?: string
       error?: string
     }
   }
