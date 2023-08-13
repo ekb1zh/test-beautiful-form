@@ -1,16 +1,40 @@
 .Root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
   padding: 12px 24px;
   border-radius: 8px;
-  cursor: pointer;
   font-size: 1.4rem;
   background: #81c4d7;
   transition: 0.1s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: #5db2c9;
   }
 
-  &:active {
+  &:active:not(:disabled) {
     background: #43a9c5;
   }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Loader {
+  height: 32px;
+  width: 32px;
+
+  border: solid 2px white;
+  border-color: transparent white white white;
+  border-radius: 50%;
+  animation: rotate 1s infinite linear;
+
+  position: absolute;
+  left: 12px;
 }

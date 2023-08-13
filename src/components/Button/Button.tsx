@@ -6,11 +6,19 @@ import styles from 'src/components/Button/Button.module.scss'
 const Button: React.FC<React.PropsWithChildren<Types.ButtonProps>> = ({
   children,
   type = 'button',
+  disabled,
+  loading,
   onClick,
 }) => {
   return (
-    <button type={type} className={styles.Root} onClick={onClick}>
+    <button
+      type={type}
+      className={styles.Root}
+      onClick={onClick}
+      disabled={disabled || loading}
+    >
       {children}
+      {loading && <div className={styles.Loader} />}
     </button>
   )
 }

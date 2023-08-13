@@ -1,5 +1,7 @@
 export interface ButtonProps
   extends Pick<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
-    'type' | 'onClick'
-  > {}
+    'type' | 'onClick' | 'disabled'
+  > {
+  loading?: boolean
+}
