@@ -1,0 +1,19 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  & > * {
+    width: 100%;
+  }
+
+  & > :not(:first-child) {
+    margin-top: 16px;
+  }
+
+  & > :last-child {
+    margin-top: 32px;
+    width: 60%;
+  }
+}

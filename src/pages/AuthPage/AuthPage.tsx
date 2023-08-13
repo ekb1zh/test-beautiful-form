@@ -1,54 +1,29 @@
 import React, { useState } from 'react'
 
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
-
-import * as api from 'src/api'
+import LinkButton from 'src/components/LinkButton'
+import SignInForm from 'src/pages/AuthPage/SignInForm'
+import SignUpForm from 'src/pages/AuthPage/SignUpForm'
 import styles from 'src/pages/AuthPage/AuthPage.module.scss'
 
 const AuthPage: React.FC = () => {
-  const [loginValue, setLoginValue] = useState('')
-  const [passwordValue, setPasswordValue] = useState('')
+  const [isSignInMode, setIsSignInMode] = useState(true) // sign-in or sign-up mode
 
-  const onClick = async () => {
-    try {
-      const { token, error } = await api.signUp({
-        email: 'awdawd@awdawd.awdaw',
-        password: 'awdwadawd',
-      })
-
-      if (error || typeof token !== 'string') {
-        throw new Error(error)
-      }
-
-      alert(JSON.stringify(token))
-    } catch (error) {
-      console.error(error)
-    }
+  const onClick = () => {
+    setIsSignInMode((prev) => !prev)
   }
 
   return (
     <main className={styles.Main}>
       <div className={styles.Container}>
-        <h1 className={styles.Header}>Sign In</h1>
+        <h1 className={styles.Header}>
+          {isSignInMode ? 'Sign In' : 'Sign Up'}
+        </h1>
 
-        <form className={styles.Form}>
-          <Input
-            label='Login'
-            type='text'
-            value={loginValue}
-            onChange={setLoginValue}
-          />
+        {isSignInMode ? <SignInForm /> : <SignUpForm />}
 
-          <Input
-            label='Password'
-            type='password'
-            value={passwordValue}
-            onChange={setPasswordValue}
-          />
-
-          <Button onClick={onClick}>Sing In</Button>
-        </form>
+        <LinkButton onClick={onClick}>
+          {isSignInMode ? 'Sign Up' : 'Sign In'}
+        </LinkButton>
       </div>
     </main>
   )
