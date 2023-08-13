@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import reportWebVitals from './reportWebVitals'
 
-import App from 'src/components/App'
+import AuthPage from 'src/pages/AuthPage'
 import 'src/styles/index.scss'
 import 'src/settings'
 import 'src/_mocks'
@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthPage />
   </React.StrictMode>,
 )
 

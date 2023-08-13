@@ -2,11 +2,30 @@ import React, { useState } from 'react'
 
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
-import styles from 'src/components/App/App.module.scss'
 
-const App: React.FC = () => {
+import * as api from 'src/api'
+import styles from 'src/pages/AuthPage/AuthPage.module.scss'
+
+const AuthPage: React.FC = () => {
   const [loginValue, setLoginValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
+
+  const onClick = async () => {
+    try {
+      const { token, error } = await api.signUp({
+        email: 'awdawd@awdawd.awdaw',
+        password: 'awdwadawd',
+      })
+
+      if (error || typeof token !== 'string') {
+        throw new Error(error)
+      }
+
+      alert(JSON.stringify(token))
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <main className={styles.Main}>
@@ -28,11 +47,11 @@ const App: React.FC = () => {
             onChange={setPasswordValue}
           />
 
-          <Button>Sing In</Button>
+          <Button onClick={onClick}>Sing In</Button>
         </form>
       </div>
     </main>
   )
 }
 
-export default App
+export default AuthPage
