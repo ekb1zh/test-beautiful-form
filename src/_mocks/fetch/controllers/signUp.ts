@@ -10,7 +10,7 @@ export const signUp = (body: BodyInit): Response => {
     const { user }: Schema.Api.SignUp.Body = JSON.parse(body as string)
 
     if (data.emailToUserIndex[user.email] >= 0) {
-      throw new Error(`User '${user.email} already exist'`)
+      throw new Error(`User '${user.email}' is already exist`)
     }
 
     const index = data.users.push(user) - 1
