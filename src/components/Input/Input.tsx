@@ -11,11 +11,10 @@ const stringGenerator = new StringGenerator({
 })
 
 const Input: React.FC<T.InputProps> = ({
-  value,
-  onChange,
   label,
   type,
   errorText,
+  ...other
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -34,7 +33,10 @@ const Input: React.FC<T.InputProps> = ({
       Update label styles
     */
     {
-      const isValueEmpty = value.length === 0
+      const isValueEmpty = inputRef.current
+        ? inputRef.current.value.length === 0
+        : true
+
       let label = classes.Label
 
       label += ' '
@@ -48,10 +50,7 @@ const Input: React.FC<T.InputProps> = ({
     }
 
     return classes
-  }, [isFocused, value.length])
-
-  const onChangeInput: React.InputHTMLAttributes<HTMLInputElement>['onChange'] =
-    ({ target: { value } }) => onChange(value)
+  }, [isFocused])
 
   const onFocusInput = () => setIsFocused(true)
   const onBlurInput = () => setIsFocused(false)
@@ -83,9 +82,9 @@ const Input: React.FC<T.InputProps> = ({
           type={isValueVisible ? 'text' : 'password'}
           id={id}
           className={classes.Input}
-          onChange={onChangeInput}
           onFocus={onFocusInput}
           onBlur={onBlurInput}
+          {...other}
         />
 
         {typeof label === 'string' && (
@@ -106,7 +105,7 @@ const Input: React.FC<T.InputProps> = ({
       </div>
 
       {typeof errorText === 'string' && (
-        <span className={classes.ErrorMessage}>{errorText}</span>
+        <div className={classes.ErrorMessage}>{errorText}</div>
       )}
     </div>
   )
