@@ -12,6 +12,7 @@ const SignUpForm: React.FC = () => {
   const [passwordValue, setPasswordValue] = useState('')
   const [repeatPasswordValue, setRepeatPasswordValue] = useState('')
   const [wasSubmitted, setWasSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const isPasswordsEquals = passwordValue === repeatPasswordValue
 
@@ -22,8 +23,9 @@ const SignUpForm: React.FC = () => {
       value: emailValue,
       onChange: ({ target: { value } }) => setEmailValue(value),
       errorText: wasSubmitted ? validateEmail(emailValue) : undefined,
+      disabled: isLoading,
     }),
-    [emailValue, wasSubmitted],
+    [emailValue, isLoading, wasSubmitted],
   )
 
   const passwordProps = useMemo<InputProps>(
@@ -33,8 +35,9 @@ const SignUpForm: React.FC = () => {
       value: passwordValue,
       onChange: ({ target: { value } }) => setPasswordValue(value),
       errorText: wasSubmitted ? validatePassword(passwordValue) : undefined,
+      disabled: isLoading,
     }),
-    [passwordValue, wasSubmitted],
+    [isLoading, passwordValue, wasSubmitted],
   )
 
   const repeatPasswordProps = useMemo<InputProps>(
@@ -48,14 +51,17 @@ const SignUpForm: React.FC = () => {
           ? 'The second password is different'
           : validatePassword(repeatPasswordValue)
         : undefined,
+      disabled: isLoading,
     }),
-    [isPasswordsEquals, repeatPasswordValue, wasSubmitted],
+    [isLoading, isPasswordsEquals, repeatPasswordValue, wasSubmitted],
   )
 
   const onClick = async () => {
     if (!wasSubmitted) {
       setWasSubmitted(true)
     }
+
+    setIsLoading(true)
 
     try {
       const { token, error } = await signUp({
@@ -70,6 +76,8 @@ const SignUpForm: React.FC = () => {
       alert(JSON.stringify(token))
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -78,7 +86,9 @@ const SignUpForm: React.FC = () => {
       <Input {...emailProps} />
       <Input {...passwordProps} />
       <Input {...repeatPasswordProps} />
-      <Button onClick={onClick}>Sing Up</Button>
+      <Button onClick={onClick} loading={isLoading}>
+        Sing Up
+      </Button>
     </form>
   )
 }

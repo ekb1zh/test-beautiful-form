@@ -11,6 +11,7 @@ const SignInForm: React.FC = () => {
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
   const [wasSubmitted, setWasSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const emailProps = useMemo<InputProps>(
     () => ({
@@ -19,8 +20,9 @@ const SignInForm: React.FC = () => {
       value: emailValue,
       onChange: ({ target: { value } }) => setEmailValue(value),
       errorText: wasSubmitted ? validateEmail(emailValue) : undefined,
+      disabled: isLoading,
     }),
-    [emailValue, wasSubmitted],
+    [emailValue, isLoading, wasSubmitted],
   )
 
   const passwordProps = useMemo<InputProps>(
@@ -30,14 +32,17 @@ const SignInForm: React.FC = () => {
       value: passwordValue,
       onChange: ({ target: { value } }) => setPasswordValue(value),
       errorText: wasSubmitted ? validatePassword(passwordValue) : undefined,
+      disabled: isLoading,
     }),
-    [passwordValue, wasSubmitted],
+    [isLoading, passwordValue, wasSubmitted],
   )
 
   const onClick = async () => {
     if (!wasSubmitted) {
       setWasSubmitted(true)
     }
+
+    setIsLoading(true)
 
     try {
       const { token, error } = await signIn({
@@ -52,6 +57,8 @@ const SignInForm: React.FC = () => {
       alert(JSON.stringify(token))
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -59,7 +66,9 @@ const SignInForm: React.FC = () => {
     <form className={styles.Form}>
       <Input {...emailProps} />
       <Input {...passwordProps} />
-      <Button onClick={onClick}>Sing In</Button>
+      <Button onClick={onClick} loading={isLoading}>
+        Sing In
+      </Button>
     </form>
   )
 }

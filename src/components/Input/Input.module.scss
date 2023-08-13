@@ -2,6 +2,10 @@ $transition: 0.2s;
 $eye-button-width: 56px;
 $left-space: 12px;
 
+.RootContainer_disabled {
+  opacity: 0.5;
+}
+
 .InnerContainer {
   width: 100%;
   position: relative;
@@ -40,11 +44,11 @@ $left-space: 12px;
   background: rgba(255, 255, 255, 0.5);
   transition: $transition;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.7);
   }
 
-  &:focus {
+  &:focus:not(:disabled) {
     background: rgba(255, 255, 255, 0.9);
   }
 
@@ -64,15 +68,15 @@ $left-space: 12px;
   align-items: center;
   justify-content: center;
 
+  opacity: 0.5;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+  }
+
   & > svg {
     width: 24;
     height: 24px;
-
-    opacity: 0.5;
-
-    &:hover {
-      opacity: 1;
-    }
   }
 }
 

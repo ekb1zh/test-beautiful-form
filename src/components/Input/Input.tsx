@@ -14,6 +14,7 @@ const Input: React.FC<T.InputProps> = ({
   label,
   type,
   errorText,
+  disabled,
   ...other
 }) => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -49,8 +50,15 @@ const Input: React.FC<T.InputProps> = ({
       classes.Label = label
     }
 
+    /*
+      Update root styles
+    */
+    if (disabled) {
+      classes.RootContainer = classes.RootContainer_disabled
+    }
+
     return classes
-  }, [isFocused])
+  }, [disabled, isFocused])
 
   const onFocusInput = () => setIsFocused(true)
   const onBlurInput = () => setIsFocused(false)
@@ -75,7 +83,7 @@ const Input: React.FC<T.InputProps> = ({
   }, [type])
 
   return (
-    <div>
+    <div className={classes.RootContainer}>
       <div className={classes.InnerContainer}>
         <input
           ref={inputRef}
@@ -84,6 +92,7 @@ const Input: React.FC<T.InputProps> = ({
           className={classes.Input}
           onFocus={onFocusInput}
           onBlur={onBlurInput}
+          disabled={disabled}
           {...other}
         />
 
@@ -99,6 +108,7 @@ const Input: React.FC<T.InputProps> = ({
             className={classes.EyeButton}
             onMouseDown={onMouseDownEyeButton}
             tabIndex={-1}
+            disabled={disabled}
           >
             {eyeIcon}
           </button>
