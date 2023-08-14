@@ -14,14 +14,12 @@ const AppPage: React.FC = () => {
 
   const router = useMemo(() => {
     switch (page) {
-      case 'auth':
-        return <AuthPage />
-
       case 'user':
         return <UserPage />
 
+      case 'auth':
       default:
-        throw new Error(`Incorrect page: '${page}'`) // React will go to error page
+        return <AuthPage />
     }
   }, [page])
 
