@@ -22,7 +22,7 @@ const UserPage: React.FC = () => {
       }
 
       setContext((prev) => {
-        const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.clone
+        const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
         delete next.token
         delete next.user
 

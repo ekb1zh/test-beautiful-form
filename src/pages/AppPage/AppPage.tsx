@@ -31,7 +31,7 @@ const AppPage: React.FC = () => {
     if (token && user) {
       if (page !== 'user') {
         setContext((prev) => {
-          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.clone
+          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
           next.page = 'user'
 
           return next
@@ -40,7 +40,7 @@ const AppPage: React.FC = () => {
     } else if (!token && !user) {
       if (page !== 'auth') {
         setContext((prev) => {
-          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.clone
+          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
           next.page = 'auth'
 
           return next

@@ -16,6 +16,7 @@ const SignUpForm: React.FC = () => {
   const [repeatPasswordValue, setRepeatPasswordValue] = useState('')
   const [wasSubmitted, setWasSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const isPasswordsEquals = passwordValue === repeatPasswordValue
 
@@ -75,12 +76,14 @@ const SignUpForm: React.FC = () => {
           password: passwordValue,
         })
 
+        setErrorMessage(error ? error : null)
+
         if (error || typeof token !== 'string') {
-          throw new Error(error)
+          throw new Error(error || token)
         }
 
         setContext((prev) => {
-          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.clone
+          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
           next.token = token
           next.user = {
             email: emailValue,
@@ -97,13 +100,17 @@ const SignUpForm: React.FC = () => {
     }
 
   return (
-    <form className={styles.Form} onSubmit={onSubmit}>
+    <form className={styles.Root} onSubmit={onSubmit}>
       <Input {...emailProps} />
       <Input {...passwordProps} />
       <Input {...repeatPasswordProps} />
-      <Button type='submit' loading={isLoading}>
-        Sing Up
-      </Button>
+
+      <div className={styles.Container}>
+        <Button type='submit' loading={isLoading}>
+          Sing Up
+        </Button>
+        {<p className={styles.ErrorMessage}>{errorMessage}</p>}
+      </div>
     </form>
   )
 }

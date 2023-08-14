@@ -1,4 +1,4 @@
-.Form {
+.Root {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -15,4 +15,15 @@
   & > :last-child {
     margin-top: 32px;
   }
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+}
+
+.ErrorMessage {
+  color: red;
+  margin-top: 16px;
+  text-align: center;
 }

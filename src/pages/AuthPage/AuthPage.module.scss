@@ -12,12 +12,6 @@
   background-color: lightsteelblue;
 }
 
-.Header {
-  text-align: center;
-  color: rgb(42, 42, 42);
-  margin: 32px 0;
-}
-
 .Container {
   min-height: 60%;
   width: 400px;
@@ -42,4 +36,10 @@
     margin-top: auto;
     width: auto;
   }
+}
+
+.Header {
+  text-align: center;
+  color: rgb(42, 42, 42);
+  margin: 32px 0;
 }
