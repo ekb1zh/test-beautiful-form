@@ -7,6 +7,7 @@ import {
   createDefaultValue,
   GlobalContextValue,
 } from 'src/context'
+import styles from 'src/pages/AppPage/AppPage.module.scss'
 
 const AppPage: React.FC = () => {
   const [{ token, user, page }, setContext] = useGlobalContext()
@@ -51,7 +52,11 @@ const AppPage: React.FC = () => {
     }
   }, [page, setContext, token, user])
 
-  return router
+  return (
+    <main className={styles.Main}>
+      <div className={styles.Container}>{router}</div>
+    </main>
+  )
 }
 
 export default AppPage

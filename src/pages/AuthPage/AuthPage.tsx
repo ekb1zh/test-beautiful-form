@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 
+/* 
+  SignInForm and SignUpForm potentially can be absolutely different,
+  that's why they was created separated.
+*/
+import SignInForm from 'src/pages/AuthPage/forms/SignInForm'
+import SignUpForm from 'src/pages/AuthPage/forms/SignUpForm'
 import LinkButton from 'src/components/LinkButton'
-import SignInForm from 'src/pages/AuthPage/SignInForm'
-import SignUpForm from 'src/pages/AuthPage/SignUpForm'
 import styles from 'src/pages/AuthPage/AuthPage.module.scss'
 
 const AuthPage: React.FC = () => {
@@ -13,19 +17,13 @@ const AuthPage: React.FC = () => {
   }
 
   return (
-    <main className={styles.Main}>
-      <div className={styles.Container}>
-        <h1 className={styles.Header}>
-          {isSignInMode ? 'Sign In' : 'Sign Up'}
-        </h1>
+    <div className={styles.Root}>
+      {isSignInMode ? <SignInForm /> : <SignUpForm />}
 
-        {isSignInMode ? <SignInForm /> : <SignUpForm />}
-
-        <LinkButton onClick={onClick}>
-          {isSignInMode ? 'Sign Up' : 'Sign In'}
-        </LinkButton>
-      </div>
-    </main>
+      <LinkButton onClick={onClick}>
+        {isSignInMode ? 'Sign Up' : 'Sign In'}
+      </LinkButton>
+    </div>
   )
 }
 

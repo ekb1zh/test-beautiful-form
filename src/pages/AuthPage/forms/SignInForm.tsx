@@ -5,20 +5,17 @@ import Button from 'src/components/Button'
 
 import { GlobalContextValue, useGlobalContext } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
-import { signUp } from 'src/api'
-import styles from 'src/pages/AuthPage/Form.module.scss'
+import { signIn } from 'src/api'
+import styles from 'src/pages/AuthPage/forms/Form.module.scss'
 
-const SignUpForm: React.FC = () => {
+const SignInForm: React.FC = () => {
   const [, setContext] = useGlobalContext()
 
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
-  const [repeatPasswordValue, setRepeatPasswordValue] = useState('')
   const [wasSubmitted, setWasSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-
-  const isPasswordsEquals = passwordValue === repeatPasswordValue
 
   const emailProps = useMemo<InputProps>(
     () => ({
@@ -44,22 +41,6 @@ const SignUpForm: React.FC = () => {
     [isLoading, passwordValue, wasSubmitted],
   )
 
-  const repeatPasswordProps = useMemo<InputProps>(
-    () => ({
-      label: 'Repeat password',
-      type: 'password',
-      value: repeatPasswordValue,
-      onChange: ({ target: { value } }) => setRepeatPasswordValue(value),
-      errorText: wasSubmitted
-        ? !isPasswordsEquals
-          ? 'The second password is different'
-          : validatePassword(repeatPasswordValue)
-        : undefined,
-      disabled: isLoading,
-    }),
-    [isLoading, isPasswordsEquals, repeatPasswordValue, wasSubmitted],
-  )
-
   const onSubmit: React.FormHTMLAttributes<HTMLFormElement>['onSubmit'] =
     async (event) => {
       event.preventDefault()
@@ -71,7 +52,7 @@ const SignUpForm: React.FC = () => {
       setIsLoading(true)
 
       try {
-        const { token, error } = await signUp({
+        const { token, error } = await signIn({
           email: emailValue,
           password: passwordValue,
         })
@@ -101,18 +82,24 @@ const SignUpForm: React.FC = () => {
 
   return (
     <form className={styles.Root} onSubmit={onSubmit}>
-      <Input {...emailProps} />
-      <Input {...passwordProps} />
-      <Input {...repeatPasswordProps} />
+      <h1 className={styles.Header}>Sign In</h1>
 
-      <div className={styles.Container}>
-        <Button type='submit' loading={isLoading}>
-          Sing Up
-        </Button>
-        {<p className={styles.ErrorMessage}>{errorMessage}</p>}
-      </div>
+      <fieldset className={styles.Controls}>
+        <Input {...emailProps} />
+        <Input {...passwordProps} />
+
+        <div className={styles.SubmitContainer}>
+          <Button type='submit' loading={isLoading}>
+            Sing In
+          </Button>
+
+          {typeof errorMessage === 'string' && (
+            <p className={styles.ErrorMessage}>{errorMessage}</p>
+          )}
+        </div>
+      </fieldset>
     </form>
   )
 }
 
-export default SignUpForm
+export default SignInForm

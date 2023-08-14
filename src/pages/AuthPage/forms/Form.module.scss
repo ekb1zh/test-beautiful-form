@@ -2,12 +2,15 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+}
 
-  & > * {
-    width: 100%;
-  }
+.Header {
+  text-align: center;
+  color: rgb(42, 42, 42);
+  margin: 32px 0;
+}
 
+.Controls {
   & > :not(:first-child) {
     margin-top: 16px;
   }
@@ -17,7 +20,7 @@
   }
 }
 
-.Container {
+.SubmitContainer {
   display: flex;
   flex-direction: column;
 }
