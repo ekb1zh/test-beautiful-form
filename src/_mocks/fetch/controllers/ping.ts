@@ -16,7 +16,7 @@ export const ping = (body: BodyInit): Response => {
       throw new Error(`Token is absent`)
     }
 
-    const pong = stringGenerator.next()
+    const pong = stringGenerator.next(6)
 
     response = {
       pong,

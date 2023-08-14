@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import Button from 'src/components/Button'
 import LinkButton from 'src/components/LinkButton'
 
 import { GlobalContextValue, useGlobalContext } from 'src/context'
 import { signOut, ping } from 'src/api'
+import styles from 'src/pages/UserPage/UserPage.module.scss'
 
 const UserPage: React.FC = () => {
   const [{ user, token }, setContext] = useGlobalContext()
@@ -52,22 +53,33 @@ const UserPage: React.FC = () => {
     }
   }
 
+  const infoItems = useMemo(() => {
+    const items = [
+      ['Email', user?.email],
+      ['Password', user?.password],
+      ['Token', token],
+    ]
+
+    if (typeof pongMessage === 'string') {
+      items.push(['Pong message', pongMessage])
+    }
+
+    return items
+  }, [pongMessage, token, user?.email, user?.password])
+
   return (
-    <div>
-      <div>
-        Email: <strong>{user?.email}</strong>
-        <br />
-        Password: <strong>{user?.password}</strong>
-        <br />
-        Token: <strong>{token}</strong>
-        <br />
-        {typeof pongMessage === 'string' && (
-          <span>
-            Pong message: <strong>{pongMessage}</strong>
-          </span>
-        )}
-      </div>
-      <div>
+    <div className={styles.Root}>
+      <h1 className={styles.Header}>User</h1>
+
+      <ul className={styles.List}>
+        {infoItems.map(([key, value]) => (
+          <li key={key}>
+            {key}: <strong>{value}</strong>
+          </li>
+        ))}
+      </ul>
+
+      <div className={styles.Footer}>
         <Button
           onClick={onClickPingButton}
           loading={isPingLoading}
@@ -75,6 +87,7 @@ const UserPage: React.FC = () => {
         >
           Ping
         </Button>
+
         <LinkButton
           onClick={onClickSignOutButton}
           disabled={isPingLoading || isSignOutLoading}

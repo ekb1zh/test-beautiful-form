@@ -1,0 +1,37 @@
+.Root {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.Header {
+  text-align: center;
+  color: rgb(42, 42, 42);
+  margin: 32px 0;
+}
+
+.List {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  font-size: 1.2rem;
+
+  & > li {
+    margin-top: 8px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.Footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+  margin-top: 32px;
+}
