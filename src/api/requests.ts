@@ -1,4 +1,4 @@
-import * as Schema from 'src/schema'
+import { Schema } from 'src/api'
 
 export const signIn = async (
   user: Schema.User,

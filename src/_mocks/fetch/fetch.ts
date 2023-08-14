@@ -1,6 +1,6 @@
 import { DELAY_BEFORE_RESPONSE, Route } from 'src/_mocks/fetch/constants'
 import { signUp, signIn, signOut, ping } from 'src/_mocks/fetch/controllers'
-import * as Schema from 'src/schema'
+import { Schema } from 'src/api'
 
 window.fetch = async (route, options) => {
   await new Promise((resolve) => setTimeout(resolve, DELAY_BEFORE_RESPONSE))

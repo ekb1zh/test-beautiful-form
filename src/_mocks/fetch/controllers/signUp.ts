@@ -1,6 +1,6 @@
 import { storage } from 'src/_mocks/fetch/instances'
 import { stringGenerator } from 'src/_mocks/fetch/instances'
-import * as Schema from 'src/schema'
+import { Schema } from 'src/api'
 
 export const signUp = (body: BodyInit): Response => {
   let response: Schema.Api.SignUp.Response

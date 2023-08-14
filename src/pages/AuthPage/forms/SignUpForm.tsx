@@ -5,8 +5,7 @@ import Button from 'src/components/Button'
 
 import { GlobalContextValue, useGlobalContext } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
-import { signUp } from 'src/api'
-import * as Schema from 'src/schema'
+import { signUp, Schema } from 'src/api'
 import styles from 'src/pages/AuthPage/forms/Form.module.scss'
 
 const SignUpForm: React.FC = () => {

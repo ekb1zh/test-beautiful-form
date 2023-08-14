@@ -1,5 +1,5 @@
 import { storage } from 'src/_mocks/fetch/instances'
-import * as Schema from 'src/schema'
+import { Schema } from 'src/api'
 
 export const signOut = (body: BodyInit) => {
   let response: Schema.Api.SignUp.Response
