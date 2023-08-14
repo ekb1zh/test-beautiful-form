@@ -17,16 +17,24 @@ const SignInForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  const validation = useMemo(
+    () => ({
+      email: validateEmail(emailValue),
+      password: validatePassword(passwordValue),
+    }),
+    [emailValue, passwordValue],
+  )
+
   const emailProps = useMemo<InputProps>(
     () => ({
       label: 'Email',
       type: 'text',
       value: emailValue,
       onChange: ({ target: { value } }) => setEmailValue(value),
-      errorText: wasSubmitted ? validateEmail(emailValue) : undefined,
+      errorText: wasSubmitted ? validation.email : undefined,
       disabled: isLoading,
     }),
-    [emailValue, isLoading, wasSubmitted],
+    [emailValue, isLoading, validation.email, wasSubmitted],
   )
 
   const passwordProps = useMemo<InputProps>(
@@ -35,10 +43,18 @@ const SignInForm: React.FC = () => {
       type: 'password',
       value: passwordValue,
       onChange: ({ target: { value } }) => setPasswordValue(value),
-      errorText: wasSubmitted ? validatePassword(passwordValue) : undefined,
+      errorText: wasSubmitted ? validation.password : undefined,
       disabled: isLoading,
     }),
-    [isLoading, passwordValue, wasSubmitted],
+    [isLoading, passwordValue, validation.password, wasSubmitted],
+  )
+
+  const isFormValid = useMemo(
+    () =>
+      [errorMessage, validation.email, validation.password].every(
+        (v) => typeof v !== 'string',
+      ),
+    [errorMessage, validation.email, validation.password],
   )
 
   const onSubmit: React.FormHTMLAttributes<HTMLFormElement>['onSubmit'] =
@@ -47,6 +63,10 @@ const SignInForm: React.FC = () => {
 
       if (!wasSubmitted) {
         setWasSubmitted(true)
+      }
+
+      if (!isFormValid) {
+        return
       }
 
       setIsLoading(true)
@@ -89,7 +109,11 @@ const SignInForm: React.FC = () => {
         <Input {...passwordProps} />
 
         <div className={styles.SubmitContainer}>
-          <Button type='submit' loading={isLoading}>
+          <Button
+            type='submit'
+            loading={isLoading}
+            disabled={wasSubmitted ? !isFormValid : undefined}
+          >
             Sing In
           </Button>
 

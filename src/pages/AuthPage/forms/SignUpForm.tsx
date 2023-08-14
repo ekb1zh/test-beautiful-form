@@ -19,6 +19,14 @@ const SignUpForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const isPasswordsEquals = passwordValue === repeatPasswordValue
+  const validation = useMemo(
+    () => ({
+      email: validateEmail(emailValue),
+      password: validatePassword(passwordValue),
+      repeatPassword: validatePassword(repeatPasswordValue),
+    }),
+    [emailValue, passwordValue, repeatPasswordValue],
+  )
 
   const emailProps = useMemo<InputProps>(
     () => ({
@@ -26,10 +34,10 @@ const SignUpForm: React.FC = () => {
       type: 'text',
       value: emailValue,
       onChange: ({ target: { value } }) => setEmailValue(value),
-      errorText: wasSubmitted ? validateEmail(emailValue) : undefined,
+      errorText: wasSubmitted ? validation.email : undefined,
       disabled: isLoading,
     }),
-    [emailValue, isLoading, wasSubmitted],
+    [emailValue, isLoading, validation.email, wasSubmitted],
   )
 
   const passwordProps = useMemo<InputProps>(
@@ -38,10 +46,10 @@ const SignUpForm: React.FC = () => {
       type: 'password',
       value: passwordValue,
       onChange: ({ target: { value } }) => setPasswordValue(value),
-      errorText: wasSubmitted ? validatePassword(passwordValue) : undefined,
+      errorText: wasSubmitted ? validation.password : undefined,
       disabled: isLoading,
     }),
-    [isLoading, passwordValue, wasSubmitted],
+    [isLoading, passwordValue, validation.password, wasSubmitted],
   )
 
   const repeatPasswordProps = useMemo<InputProps>(
@@ -51,13 +59,37 @@ const SignUpForm: React.FC = () => {
       value: repeatPasswordValue,
       onChange: ({ target: { value } }) => setRepeatPasswordValue(value),
       errorText: wasSubmitted
-        ? !isPasswordsEquals
-          ? 'The second password is different'
-          : validatePassword(repeatPasswordValue)
+        ? isPasswordsEquals
+          ? validation.repeatPassword
+          : 'Repeat password is unequals'
         : undefined,
       disabled: isLoading,
     }),
-    [isLoading, isPasswordsEquals, repeatPasswordValue, wasSubmitted],
+    [
+      isLoading,
+      isPasswordsEquals,
+      repeatPasswordValue,
+      validation.repeatPassword,
+      wasSubmitted,
+    ],
+  )
+
+  const isFormValid = useMemo(
+    () =>
+      isPasswordsEquals &&
+      [
+        errorMessage,
+        validation.email,
+        validation.password,
+        validation.repeatPassword,
+      ].every((v) => typeof v !== 'string'),
+    [
+      errorMessage,
+      isPasswordsEquals,
+      validation.email,
+      validation.password,
+      validation.repeatPassword,
+    ],
   )
 
   const onSubmit: React.FormHTMLAttributes<HTMLFormElement>['onSubmit'] =
@@ -66,6 +98,10 @@ const SignUpForm: React.FC = () => {
 
       if (!wasSubmitted) {
         setWasSubmitted(true)
+      }
+
+      if (!isFormValid) {
+        return
       }
 
       setIsLoading(true)
@@ -109,7 +145,11 @@ const SignUpForm: React.FC = () => {
         <Input {...repeatPasswordProps} />
 
         <div className={styles.SubmitContainer}>
-          <Button type='submit' loading={isLoading}>
+          <Button
+            type='submit'
+            loading={isLoading}
+            disabled={wasSubmitted ? !isFormValid : undefined}
+          >
             Sing Up
           </Button>
 
