@@ -2,19 +2,23 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import reportWebVitals from './reportWebVitals'
 
-import { GlobalProvider } from 'src/context'
 import AppPage from 'src/pages/AppPage'
+import { SyncErrorsBoundary, AsyncErrorsBoundary } from 'src/errors'
+import { GlobalProvider } from 'src/context'
 import 'src/styles/index.scss'
-import 'src/settings'
 import 'src/_mocks'
 
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
   <React.StrictMode>
-    <GlobalProvider>
-      <AppPage />
-    </GlobalProvider>
+    <AsyncErrorsBoundary>
+      <SyncErrorsBoundary>
+        <GlobalProvider>
+          <AppPage />
+        </GlobalProvider>
+      </SyncErrorsBoundary>
+    </AsyncErrorsBoundary>
   </React.StrictMode>,
 )
 
