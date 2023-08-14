@@ -33,7 +33,10 @@ const SignUpForm: React.FC = () => {
       label: 'Email',
       type: 'text',
       value: emailValue,
-      onChange: ({ target: { value } }) => setEmailValue(value),
+      onChange: ({ target: { value } }) => {
+        setEmailValue(value)
+        setErrorMessage(null)
+      },
       errorText: wasSubmitted ? validation.email : undefined,
       disabled: isLoading,
     }),
@@ -45,7 +48,10 @@ const SignUpForm: React.FC = () => {
       label: 'Password',
       type: 'password',
       value: passwordValue,
-      onChange: ({ target: { value } }) => setPasswordValue(value),
+      onChange: ({ target: { value } }) => {
+        setPasswordValue(value)
+        setErrorMessage(null)
+      },
       errorText: wasSubmitted ? validation.password : undefined,
       disabled: isLoading,
     }),
@@ -57,7 +63,10 @@ const SignUpForm: React.FC = () => {
       label: 'Repeat password',
       type: 'password',
       value: repeatPasswordValue,
-      onChange: ({ target: { value } }) => setRepeatPasswordValue(value),
+      onChange: ({ target: { value } }) => {
+        setRepeatPasswordValue(value)
+        setErrorMessage(null)
+      },
       errorText: wasSubmitted
         ? isPasswordsEquals
           ? validation.repeatPassword

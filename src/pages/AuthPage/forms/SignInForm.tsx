@@ -30,7 +30,10 @@ const SignInForm: React.FC = () => {
       label: 'Email',
       type: 'text',
       value: emailValue,
-      onChange: ({ target: { value } }) => setEmailValue(value),
+      onChange: ({ target: { value } }) => {
+        setEmailValue(value)
+        setErrorMessage(null)
+      },
       errorText: wasSubmitted ? validation.email : undefined,
       disabled: isLoading,
     }),
@@ -42,7 +45,10 @@ const SignInForm: React.FC = () => {
       label: 'Password',
       type: 'password',
       value: passwordValue,
-      onChange: ({ target: { value } }) => setPasswordValue(value),
+      onChange: ({ target: { value } }) => {
+        setPasswordValue(value)
+        setErrorMessage(null)
+      },
       errorText: wasSubmitted ? validation.password : undefined,
       disabled: isLoading,
     }),
