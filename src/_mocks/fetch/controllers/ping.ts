@@ -23,7 +23,7 @@ export const ping = (body: BodyInit): Response => {
     }
   } catch (error: any) {
     response = {
-      error: error?.message || `Internal error`,
+      error: error?.message || `Internal server error`,
     }
   }
 

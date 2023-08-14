@@ -17,7 +17,7 @@ window.fetch = async (route, options) => {
 
   if (method !== 'POST') {
     const response: Schema.Api.GeneralResponseError = {
-      error: `Request has incorrect method: '${method}'`,
+      error: `Request has incorrect method ${method}`,
     }
 
     return new Response(JSON.stringify(response))
@@ -46,7 +46,7 @@ window.fetch = async (route, options) => {
 
     default: {
       const response: Schema.Api.GeneralResponseError = {
-        error: `Unknown route: '${route}'`,
+        error: `Unknown route ${route}`,
       }
 
       return new Response(JSON.stringify(response))

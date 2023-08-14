@@ -16,7 +16,7 @@ export const signOut = (body: BodyInit) => {
     }
   } catch (error: any) {
     response = {
-      error: error?.message || `Internal error`,
+      error: error?.message || `Internal server error`,
     }
   }
 

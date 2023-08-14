@@ -15,7 +15,7 @@ export const signIn = (body: BodyInit): Response => {
     const user = data.users[index]
 
     if (!user) {
-      throw new Error(`User '${email}' is absent`)
+      throw new Error(`User ${email} is unregistered. Please Sign Up.`)
     }
 
     if (user.password !== password) {
@@ -32,7 +32,7 @@ export const signIn = (body: BodyInit): Response => {
     }
   } catch (error: any) {
     response = {
-      error: error?.message || `Internal error`,
+      error: error?.message || `Internal server error`,
     }
   }
 
