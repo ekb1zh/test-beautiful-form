@@ -63,7 +63,7 @@ const Input: React.FC<T.InputProps> = ({
   const onFocusInput = () => setIsFocused(true)
   const onBlurInput = () => setIsFocused(false)
 
-  const onMouseDownEyeButton: React.ButtonHTMLAttributes<HTMLButtonElement>['onClick'] =
+  const onMouseDownEyeButton: React.ButtonHTMLAttributes<HTMLButtonElement>['onMouseDown'] =
     (event) => {
       /*
         Prevent focus out
@@ -72,15 +72,23 @@ const Input: React.FC<T.InputProps> = ({
         event.preventDefault()
       }
 
-      /*
-        Update isValueVisible
-      */
       setIsValueVisible((prev) => !prev)
     }
 
   useEffect(() => {
     setIsValueVisible(type !== 'password')
   }, [type])
+
+  const onKeyDownEyeButton: React.ButtonHTMLAttributes<HTMLButtonElement>['onKeyDown'] =
+    (event) => {
+      const { code } = event
+      const isEnter = code === 'Enter'
+      const isSpace = code === 'Space' || code === ' ' || code === 'Spacebar'
+
+      if (isEnter || isSpace) {
+        setIsValueVisible((prev) => !prev)
+      }
+    }
 
   return (
     <div className={classes.RootContainer}>
@@ -107,7 +115,7 @@ const Input: React.FC<T.InputProps> = ({
             type='button'
             className={classes.EyeButton}
             onMouseDown={onMouseDownEyeButton}
-            tabIndex={-1}
+            onKeyDown={onKeyDownEyeButton}
             disabled={disabled}
           >
             {eyeIcon}
