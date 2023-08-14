@@ -19,6 +19,10 @@
   font-size: 1.2rem;
 
   & > li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     margin-top: 8px;
 
     &:first-child {

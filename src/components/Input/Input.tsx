@@ -57,8 +57,15 @@ const Input: React.FC<T.InputProps> = ({
       classes.RootContainer = classes.RootContainer_disabled
     }
 
+    /*
+      Update styles for password type
+    */
+    if (type === 'password') {
+      classes.Input = `${classes.Input} ${classes.Input_password}`
+    }
+
     return classes
-  }, [disabled, isFocused])
+  }, [disabled, isFocused, type])
 
   const onFocusInput = () => setIsFocused(true)
   const onBlurInput = () => setIsFocused(false)

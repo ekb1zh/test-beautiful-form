@@ -44,16 +44,16 @@ $left-space: 12px;
   background: rgba(255, 255, 255, 0.5);
   transition: $transition;
 
+  &_password {
+    padding-right: $eye-button-width;
+  }
+
   &:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.7);
   }
 
   &:focus:not(:disabled) {
     background: rgba(255, 255, 255, 0.9);
-  }
-
-  &[type='password'] {
-    padding-right: $eye-button-width;
   }
 }
 
