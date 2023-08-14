@@ -37,36 +37,39 @@ const SignInForm: React.FC = () => {
     [isLoading, passwordValue, wasSubmitted],
   )
 
-  const onClick = async () => {
-    if (!wasSubmitted) {
-      setWasSubmitted(true)
-    }
+  const onSubmit: React.FormHTMLAttributes<HTMLFormElement>['onSubmit'] =
+    async (event) => {
+      event.preventDefault()
 
-    setIsLoading(true)
-
-    try {
-      const { token, error } = await signIn({
-        email: emailValue,
-        password: passwordValue,
-      })
-
-      if (error || typeof token !== 'string') {
-        throw new Error(error)
+      if (!wasSubmitted) {
+        setWasSubmitted(true)
       }
 
-      alert(JSON.stringify(token))
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setIsLoading(false)
+      setIsLoading(true)
+
+      try {
+        const { token, error } = await signIn({
+          email: emailValue,
+          password: passwordValue,
+        })
+
+        if (error || typeof token !== 'string') {
+          throw new Error(error)
+        }
+
+        alert(JSON.stringify(token))
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsLoading(false)
+      }
     }
-  }
 
   return (
-    <form className={styles.Form}>
+    <form className={styles.Form} onSubmit={onSubmit}>
       <Input {...emailProps} />
       <Input {...passwordProps} />
-      <Button onClick={onClick} loading={isLoading}>
+      <Button type='submit' loading={isLoading}>
         Sing In
       </Button>
     </form>
