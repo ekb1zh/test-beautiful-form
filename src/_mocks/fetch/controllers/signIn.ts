@@ -15,7 +15,7 @@ export const signIn = (body: BodyInit): Response => {
     const user = data.users[index]
 
     if (!user) {
-      throw new Error(`User ${email} is unregistered. Please Sign Up.`)
+      throw new Error(`This user is unregistered. Please Sign Up.`)
     }
 
     if (user.password !== password) {

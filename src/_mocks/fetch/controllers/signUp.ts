@@ -10,9 +10,7 @@ export const signUp = (body: BodyInit): Response => {
     const { user }: Schema.Api.SignUp.Body = JSON.parse(body as string)
 
     if (data.emailToUserIndex[user.email] >= 0) {
-      throw new Error(
-        `User ${user.email} is already registered. Please Sign In.`,
-      )
+      throw new Error(`This user is already registered. Please Sign In.`)
     }
 
     const index = data.users.push(user) - 1
