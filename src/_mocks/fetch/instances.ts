@@ -8,7 +8,7 @@ export const stringGenerator = new StringGenerator({
 })
 
 export const db = (() => {
-  const name = 'FAKE_BACKEND_USERS_DB'
+  const name = 'FAKE_BACKEND_DB'
   const db = new LocalStorageItem<T.UsersDb>(name)
   const data = db.read()
 
