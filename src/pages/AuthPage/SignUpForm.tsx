@@ -3,11 +3,14 @@ import React, { useMemo, useState } from 'react'
 import Input, { InputProps } from 'src/components/Input'
 import Button from 'src/components/Button'
 
+import { GlobalContextValue, useGlobalContext } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
 import { signUp } from 'src/api'
 import styles from 'src/pages/AuthPage/Form.module.scss'
 
 const SignUpForm: React.FC = () => {
+  const [, setContext] = useGlobalContext()
+
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
   const [repeatPasswordValue, setRepeatPasswordValue] = useState('')
@@ -76,7 +79,16 @@ const SignUpForm: React.FC = () => {
           throw new Error(error)
         }
 
-        alert(JSON.stringify(token))
+        setContext((prev) => {
+          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.clone
+          next.token = token
+          next.user = {
+            email: emailValue,
+            password: passwordValue,
+          }
+
+          return next
+        })
       } catch (error) {
         console.error(error)
       } finally {

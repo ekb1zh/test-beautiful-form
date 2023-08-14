@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import reportWebVitals from './reportWebVitals'
 
-import AuthPage from 'src/pages/AuthPage'
+import { GlobalProvider } from 'src/context'
+import AppPage from 'src/pages/AppPage'
 import 'src/styles/index.scss'
 import 'src/settings'
 import 'src/_mocks'
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
   <React.StrictMode>
-    <AuthPage />
+    <GlobalProvider>
+      <AppPage />
+    </GlobalProvider>
   </React.StrictMode>,
 )
 
