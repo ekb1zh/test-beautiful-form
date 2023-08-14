@@ -6,6 +6,7 @@ import Button from 'src/components/Button'
 import { GlobalContextValue, useGlobalContext } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
 import { signIn } from 'src/api'
+import * as Schema from 'src/schema'
 import styles from 'src/pages/AuthPage/forms/Form.module.scss'
 
 const SignInForm: React.FC = () => {
@@ -78,10 +79,12 @@ const SignInForm: React.FC = () => {
       setIsLoading(true)
 
       try {
-        const { token, error } = await signIn({
+        const user: Schema.User = {
           email: emailValue,
           password: passwordValue,
-        })
+        }
+
+        const { token, error } = await signIn(user)
 
         setErrorMessage(error ? error : null)
 
@@ -92,10 +95,7 @@ const SignInForm: React.FC = () => {
         setContext((prev) => {
           const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
           next.token = token
-          next.user = {
-            email: emailValue,
-            password: passwordValue,
-          }
+          next.user = user
 
           return next
         })
