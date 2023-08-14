@@ -43,3 +43,47 @@ export const signUp = async (
 
   return response
 }
+
+export const signOut = async (
+  token: string,
+): Promise<Schema.Api.SignOut.Response> => {
+  const route: Schema.Api.SignOut.Route = '/sign-out'
+  const body: Schema.Api.SignOut.Body = {
+    token,
+  }
+  const options: Schema.Api.SignOut.Options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(body),
+  }
+
+  const response: Schema.Api.SignOut.Response = await (
+    await fetch(route, options)
+  ).json()
+
+  return response
+}
+
+export const ping = async (
+  token: string,
+): Promise<Schema.Api.Ping.Response> => {
+  const route: Schema.Api.Ping.Route = '/ping'
+  const body: Schema.Api.Ping.Body = {
+    token,
+  }
+  const options: Schema.Api.Ping.Options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(body),
+  }
+
+  const response: Schema.Api.Ping.Response = await (
+    await fetch(route, options)
+  ).json()
+
+  return response
+}

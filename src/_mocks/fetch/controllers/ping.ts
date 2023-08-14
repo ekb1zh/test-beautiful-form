@@ -1,4 +1,4 @@
-import { db } from 'src/_mocks/fetch/instances'
+import { storage } from 'src/_mocks/fetch/instances'
 import { stringGenerator } from 'src/_mocks/fetch/instances'
 import * as Schema from 'src/schema'
 
@@ -6,7 +6,7 @@ export const ping = (body: BodyInit): Response => {
   let response: Schema.Api.Ping.Response
 
   try {
-    const data = db.read()!
+    const data = storage.read()!
     const { token }: Schema.Api.Ping.Body = JSON.parse(body as string)
 
     const index = data.tokenToUserIndex[token]
@@ -16,7 +16,7 @@ export const ping = (body: BodyInit): Response => {
       throw new Error(`Token is absent`)
     }
 
-    const pong = `Random pong message: '${stringGenerator.next()}'`
+    const pong = stringGenerator.next()
 
     response = {
       pong,

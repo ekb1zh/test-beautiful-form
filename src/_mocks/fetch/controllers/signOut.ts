@@ -1,15 +1,15 @@
-import { db } from 'src/_mocks/fetch/instances'
+import { storage } from 'src/_mocks/fetch/instances'
 import * as Schema from 'src/schema'
 
 export const signOut = (body: BodyInit) => {
   let response: Schema.Api.SignUp.Response
 
   try {
-    const data = db.read()!
+    const data = storage.read()!
     const { token }: Schema.Api.SignOut.Body = JSON.parse(body as string)
 
     delete data.tokenToUserIndex[token]
-    db.write(data)
+    storage.write(data)
 
     response = {
       token,

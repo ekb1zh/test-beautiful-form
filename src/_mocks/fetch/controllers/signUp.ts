@@ -1,4 +1,4 @@
-import { db } from 'src/_mocks/fetch/instances'
+import { storage } from 'src/_mocks/fetch/instances'
 import { stringGenerator } from 'src/_mocks/fetch/instances'
 import * as Schema from 'src/schema'
 
@@ -6,7 +6,7 @@ export const signUp = (body: BodyInit): Response => {
   let response: Schema.Api.SignUp.Response
 
   try {
-    const data = db.read()!
+    const data = storage.read()!
     const { user }: Schema.Api.SignUp.Body = JSON.parse(body as string)
 
     if (data.emailToUserIndex[user.email] >= 0) {
@@ -19,7 +19,7 @@ export const signUp = (body: BodyInit): Response => {
     data.emailToUserIndex[user.email] = index
     data.tokenToUserIndex[token] = index
 
-    db.write(data)
+    storage.write(data)
 
     response = {
       token,
