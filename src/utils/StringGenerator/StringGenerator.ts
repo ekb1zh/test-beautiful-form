@@ -1,4 +1,4 @@
-import { StringGeneratorParams } from 'src/utils/StringGenerator/types'
+import type { StringGeneratorParams } from 'src/utils/StringGenerator/types'
 
 export class StringGenerator {
   private readonly ALLOWED_CHARS: string

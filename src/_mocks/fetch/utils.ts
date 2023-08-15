@@ -1,5 +1,5 @@
 import { StringGenerator, LocalStorageItem } from 'src/utils'
-import * as T from 'src/_mocks/fetch/types'
+import type * as T from 'src/_mocks/fetch/types'
 
 export const stringGenerator = new StringGenerator({
   allowedChars:

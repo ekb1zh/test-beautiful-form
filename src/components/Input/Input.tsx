@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Icon from 'src/components/Icon'
 import { StringGenerator } from 'src/utils'
 import styles from 'src/components/Input/Input.module.scss'
-import * as T from 'src/components/Input/types'
+import type * as T from 'src/components/Input/types'
 
 const stringGenerator = new StringGenerator({
   allowedChars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',

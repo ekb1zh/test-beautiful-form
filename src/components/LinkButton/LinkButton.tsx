@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styles from 'src/components/LinkButton/LinkButton.module.scss'
-import * as T from 'src/components/LinkButton/types'
+import type * as T from 'src/components/LinkButton/types'
 
 const LinkButton: React.FC<React.PropsWithChildren<T.LinkButtonProps>> = ({
   children,
