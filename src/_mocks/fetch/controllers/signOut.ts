@@ -1,24 +1,22 @@
-import { storage } from 'src/_mocks/fetch/instances'
+import { storage } from 'src/_mocks/fetch/utils'
 import { Schema } from 'src/api'
 
-export const signOut = (body: BodyInit) => {
-  let response: Schema.Api.SignUp.Response
-
+export const signOut = (headers: HeadersInit): Schema.Api.SignOut.Response => {
   try {
+    const token = (headers as Record<string, string>)['Authorization']
     const data = storage.read()!
-    const { token }: Schema.Api.SignOut.Body = JSON.parse(body as string)
+
+    if (!Object.hasOwn(data.tokenToUserIndex, token)) {
+      throw new Error(`Incorrect token`)
+    }
 
     delete data.tokenToUserIndex[token]
     storage.write(data)
 
-    response = {
-      token,
-    }
+    return {}
   } catch (error: any) {
-    response = {
+    return {
       error: error?.message || `Internal server error`,
     }
   }
-
-  return new Response(JSON.stringify(response))
 }

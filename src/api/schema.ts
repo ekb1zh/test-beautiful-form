@@ -3,8 +3,20 @@ export interface User {
   password: string
 }
 
+export type Token = string // for example `Bearer ${string}`
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export type SerializedJson<T> = string
+
 export namespace Api {
   export type Route = SignUp.Route | SignIn.Route | SignOut.Route | Ping.Route
+
+  export type Response =
+    | GeneralResponseError
+    | SignUp.Response
+    | SignIn.Response
+    | SignOut.Response
+    | Ping.Response
 
   export interface GeneralResponseError {
     error: string
@@ -22,11 +34,11 @@ export namespace Api {
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       }
-      body: string
+      body: SerializedJson<Body>
     }
 
     export interface Response {
-      token?: string
+      token?: Token
       error?: string
     }
   }
@@ -43,11 +55,11 @@ export namespace Api {
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       }
-      body: string
+      body: SerializedJson<Body>
     }
 
     export interface Response {
-      token?: string
+      token?: Token
       error?: string
     }
   }
@@ -55,16 +67,11 @@ export namespace Api {
   export namespace SignOut {
     export type Route = '/sign-out'
 
-    export interface Body {
-      token: string
-    }
-
     export interface Options {
       method: 'POST'
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        Authorization: Token
       }
-      body: string
     }
 
     export interface Response {
@@ -75,16 +82,11 @@ export namespace Api {
   export namespace Ping {
     export type Route = '/ping'
 
-    export interface Body {
-      token: string
-    }
-
     export interface Options {
-      method: 'POST'
+      method: 'GET'
       headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+        Authorization: Token
       }
-      body: string
     }
 
     export interface Response {

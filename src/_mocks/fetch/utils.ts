@@ -24,3 +24,9 @@ export const storage = (() => {
 
   return db
 })()
+
+export const generateBearerToken = () => {
+  const token = `Bearer ${stringGenerator.next()}`
+
+  return token
+}

@@ -4,9 +4,7 @@ export const signIn = async (
   user: Schema.User,
 ): Promise<Schema.Api.SignIn.Response> => {
   const route: Schema.Api.SignIn.Route = '/sign-in'
-  const body: Schema.Api.SignIn.Body = {
-    user,
-  }
+  const body: Schema.Api.SignIn.Body = { user }
   const options: Schema.Api.SignIn.Options = {
     method: 'POST',
     headers: {
@@ -26,9 +24,7 @@ export const signUp = async (
   user: Schema.User,
 ): Promise<Schema.Api.SignUp.Response> => {
   const route: Schema.Api.SignUp.Route = '/sign-up'
-  const body: Schema.Api.SignUp.Body = {
-    user,
-  }
+  const body: Schema.Api.SignUp.Body = { user }
   const options: Schema.Api.SignUp.Options = {
     method: 'POST',
     headers: {
@@ -45,18 +41,15 @@ export const signUp = async (
 }
 
 export const signOut = async (
-  token: string,
+  token: Schema.Token,
 ): Promise<Schema.Api.SignOut.Response> => {
   const route: Schema.Api.SignOut.Route = '/sign-out'
-  const body: Schema.Api.SignOut.Body = {
-    token,
-  }
+
   const options: Schema.Api.SignOut.Options = {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: token,
     },
-    body: JSON.stringify(body),
   }
 
   const response: Schema.Api.SignOut.Response = await (
@@ -67,18 +60,15 @@ export const signOut = async (
 }
 
 export const ping = async (
-  token: string,
+  token: Schema.Token,
 ): Promise<Schema.Api.Ping.Response> => {
   const route: Schema.Api.Ping.Route = '/ping'
-  const body: Schema.Api.Ping.Body = {
-    token,
-  }
+
   const options: Schema.Api.Ping.Options = {
-    method: 'POST',
+    method: 'GET',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: token,
     },
-    body: JSON.stringify(body),
   }
 
   const response: Schema.Api.Ping.Response = await (

@@ -1,34 +1,30 @@
-import { storage } from 'src/_mocks/fetch/instances'
-import { stringGenerator } from 'src/_mocks/fetch/instances'
+import { storage } from 'src/_mocks/fetch/utils'
+import { generateBearerToken } from 'src/_mocks/fetch/utils'
 import { Schema } from 'src/api'
 
-export const signUp = (body: BodyInit): Response => {
-  let response: Schema.Api.SignUp.Response
-
+export const signUp = (body: BodyInit): Schema.Api.SignUp.Response => {
   try {
-    const data = storage.read()!
     const { user }: Schema.Api.SignUp.Body = JSON.parse(body as string)
+    const data = storage.read()!
 
-    if (data.emailToUserIndex[user.email] >= 0) {
+    if (Object.hasOwn(data.emailToUserIndex, user.email)) {
       throw new Error(`This user is already registered. Please Sign In.`)
     }
 
     const index = data.users.push(user) - 1
-    const token = stringGenerator.next()
+    const token = generateBearerToken()
 
     data.emailToUserIndex[user.email] = index
     data.tokenToUserIndex[token] = index
 
     storage.write(data)
 
-    response = {
+    return {
       token,
     }
   } catch (error: any) {
-    response = {
+    return {
       error: error?.message || `Internal server error`,
     }
   }
-
-  return new Response(JSON.stringify(response))
 }
