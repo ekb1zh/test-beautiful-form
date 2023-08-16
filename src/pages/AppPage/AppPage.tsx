@@ -51,9 +51,9 @@ const AppPage: React.FC = () => {
   }, [page, setContext, token, user])
 
   return (
-    <main className={styles.Main}>
-      <div className={styles.Container}>{router}</div>
-    </main>
+    <div className={styles.Root}>
+      <main className={styles.Main}>{router}</main>
+    </div>
   )
 }
 
