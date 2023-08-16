@@ -1,1 +1,1 @@
-import 'src/_mocks/fetch/fetch'
+export * from 'src/_mocks/fetch/fetch'

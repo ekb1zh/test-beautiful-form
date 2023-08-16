@@ -3,22 +3,23 @@ import ReactDOM from 'react-dom/client'
 // import reportWebVitals from './reportWebVitals'
 
 import AppPage from 'src/pages/AppPage'
-import { SyncErrorsBoundary, AsyncErrorsBoundary } from 'src/errors'
+import { ErrorBoundary } from 'src/errors'
 import { GlobalProvider } from 'src/context'
+import { applyGlobalErrorCatching, applyMocks } from 'src/settings'
 import 'src/styles/index.scss'
-import 'src/_mocks'
+
+applyGlobalErrorCatching()
+applyMocks()
 
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
   <React.StrictMode>
-    <AsyncErrorsBoundary>
-      <SyncErrorsBoundary>
-        <GlobalProvider>
-          <AppPage />
-        </GlobalProvider>
-      </SyncErrorsBoundary>
-    </AsyncErrorsBoundary>
+    <ErrorBoundary>
+      <GlobalProvider>
+        <AppPage />
+      </GlobalProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
 )
 
