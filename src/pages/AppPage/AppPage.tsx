@@ -2,12 +2,12 @@ import React, { useEffect, useMemo } from 'react'
 
 import AuthPage from 'src/pages/AuthPage'
 import UserPage from 'src/pages/UserPage'
+import Main from 'src/components/Main/Main'
 import {
   useGlobalContext,
   createDefaultValue,
   GlobalContextValue,
 } from 'src/context'
-import styles from 'src/pages/AppPage/AppPage.module.scss'
 
 const AppPage: React.FC = () => {
   const [{ token, user, page }, setContext] = useGlobalContext()
@@ -50,11 +50,7 @@ const AppPage: React.FC = () => {
     }
   }, [page, setContext, token, user])
 
-  return (
-    <div className={styles.Root}>
-      <main className={styles.Main}>{router}</main>
-    </div>
-  )
+  return <Main>{router}</Main>
 }
 
 export default AppPage
