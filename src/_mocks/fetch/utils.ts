@@ -1,4 +1,5 @@
 import { StringGenerator, LocalStorageItem } from 'src/utils'
+import { BACKEND_STORAGE_NAME } from 'src/_mocks/fetch/constants'
 import type * as T from 'src/_mocks/fetch/types'
 
 export const stringGenerator = new StringGenerator({
@@ -8,21 +9,20 @@ export const stringGenerator = new StringGenerator({
 })
 
 export const storage = (() => {
-  const name = 'BACKEND_STORAGE'
-  const db = new LocalStorageItem<T.UsersDb>(name)
-  const data = db.read()
+  const storage = new LocalStorageItem<T.UsersStorage>(BACKEND_STORAGE_NAME)
+  const data = storage.read()
 
   if (!data) {
-    const initialData: T.UsersDb = {
+    const initialData: T.UsersStorage = {
       users: [],
       emailToUserIndex: {},
       tokenToUserIndex: {},
     }
 
-    db.write(initialData)
+    storage.write(initialData)
   }
 
-  return db
+  return storage
 })()
 
 export const generateBearerToken = () => {

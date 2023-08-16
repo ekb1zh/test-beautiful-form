@@ -16,15 +16,19 @@ export const createDefaultValue = (): T.GlobalContextValue => ({
 /*
   Local storage
 */
-const STORAGE_NAME = 'FRONTEND_STORAGE'
+const FRONTEND_STORAGE_NAME = 'FRONTEND_STORAGE'
 
 const storage = (() => {
-  const item = new LocalStorageItem<T.GlobalContextValue>(STORAGE_NAME)
-  if (!item.read()) {
-    item.write(createDefaultValue())
+  const storage = new LocalStorageItem<T.GlobalContextValue>(
+    FRONTEND_STORAGE_NAME,
+  )
+  const data = storage.read()
+
+  if (!data) {
+    storage.write(createDefaultValue())
   }
 
-  return item
+  return storage
 })()
 
 /*

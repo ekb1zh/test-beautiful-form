@@ -1,6 +1,6 @@
 import { Schema } from 'src/api'
 
-export interface UsersDb {
+export interface UsersStorage {
   users: Schema.User[]
   emailToUserIndex: {
     [email: string]: number
