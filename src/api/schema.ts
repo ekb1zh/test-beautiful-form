@@ -11,87 +11,98 @@ export type SerializedJson<T> = string
 export namespace Api {
   export type Route = SignUp.Route | SignIn.Route | SignOut.Route | Ping.Route
 
-  export type Response =
-    | GeneralResponseError
-    | SignUp.Response
-    | SignIn.Response
-    | SignOut.Response
-    | Ping.Response
-
-  export interface GeneralResponseError {
-    error: string
-  }
+  export type ResponseBody =
+    | SignUp.Response.Body
+    | SignIn.Response.Body
+    | SignOut.Response.Body
+    | Ping.Response.Body
 
   export namespace SignUp {
     export type Route = '/sign-up'
 
-    export interface Body {
-      user: User
-    }
-
-    export interface Options {
-      method: 'POST'
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+    export namespace Request {
+      export interface Body {
+        user: User
       }
-      body: SerializedJson<Body>
+
+      export interface Options {
+        method: 'POST'
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+        body: SerializedJson<Body>
+      }
     }
 
-    export interface Response {
-      token?: Token
-      error?: string
+    export namespace Response {
+      export interface Body {
+        token?: Token
+        error?: string
+      }
     }
   }
 
   export namespace SignIn {
     export type Route = '/sign-in'
 
-    export interface Body {
-      user: User
-    }
-
-    export interface Options {
-      method: 'POST'
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+    export namespace Request {
+      export interface Body {
+        user: User
       }
-      body: SerializedJson<Body>
+
+      export interface Options {
+        method: 'POST'
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+        body: SerializedJson<Body>
+      }
     }
 
-    export interface Response {
-      token?: Token
-      error?: string
+    export namespace Response {
+      export interface Body {
+        token?: Token
+        error?: string
+      }
     }
   }
 
   export namespace SignOut {
     export type Route = '/sign-out'
 
-    export interface Options {
-      method: 'POST'
-      headers: {
-        Authorization: Token
+    export namespace Request {
+      export interface Options {
+        method: 'POST'
+        headers: {
+          Authorization: Token
+        }
       }
     }
 
-    export interface Response {
-      error?: string
+    export namespace Response {
+      export interface Body {
+        error?: string
+      }
     }
   }
 
   export namespace Ping {
     export type Route = '/ping'
 
-    export interface Options {
-      method: 'GET'
-      headers: {
-        Authorization: Token
+    export namespace Request {
+      export interface Options {
+        method: 'GET'
+        headers: {
+          Authorization: Token
+        }
       }
     }
 
-    export interface Response {
-      pong?: string
-      error?: string
+    export namespace Response {
+      export interface Body {
+        pong?: string
+        error?: string
+      }
     }
   }
 }

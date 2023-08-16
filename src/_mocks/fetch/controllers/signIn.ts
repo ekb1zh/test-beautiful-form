@@ -2,11 +2,11 @@ import { storage } from 'src/_mocks/fetch/utils'
 import { generateBearerToken } from 'src/_mocks/fetch/utils'
 import { Schema } from 'src/api'
 
-export const signIn = (body: BodyInit): Schema.Api.SignIn.Response => {
+export const signIn = (body: BodyInit): Schema.Api.SignIn.Response.Body => {
   try {
     const {
       user: { email, password },
-    }: Schema.Api.SignIn.Body = JSON.parse(body as string)
+    }: Schema.Api.SignIn.Request.Body = JSON.parse(body as string)
     const data = storage.read()!
 
     if (!Object.hasOwn(data.emailToUserIndex, email)) {

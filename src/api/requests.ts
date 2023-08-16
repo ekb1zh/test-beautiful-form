@@ -2,78 +2,80 @@ import { Schema } from 'src/api'
 
 export const signIn = async (
   user: Schema.User,
-): Promise<Schema.Api.SignIn.Response> => {
+): Promise<Schema.Api.SignIn.Response.Body> => {
   const route: Schema.Api.SignIn.Route = '/sign-in'
-  const body: Schema.Api.SignIn.Body = { user }
-  const options: Schema.Api.SignIn.Options = {
+
+  const requestBody: Schema.Api.SignIn.Request.Body = { user }
+  const requestOptions: Schema.Api.SignIn.Request.Options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(requestBody),
   }
 
-  const response: Schema.Api.SignIn.Response = await (
-    await fetch(route, options)
+  const responseBody: Schema.Api.SignIn.Response.Body = await (
+    await fetch(route, requestOptions)
   ).json()
 
-  return response
+  return responseBody
 }
 
 export const signUp = async (
   user: Schema.User,
-): Promise<Schema.Api.SignUp.Response> => {
+): Promise<Schema.Api.SignUp.Response.Body> => {
   const route: Schema.Api.SignUp.Route = '/sign-up'
-  const body: Schema.Api.SignUp.Body = { user }
-  const options: Schema.Api.SignUp.Options = {
+
+  const requestBody: Schema.Api.SignUp.Request.Body = { user }
+  const requestOptions: Schema.Api.SignUp.Request.Options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(requestBody),
   }
 
-  const response: Schema.Api.SignUp.Response = await (
-    await fetch(route, options)
+  const responseBody: Schema.Api.SignUp.Response.Body = await (
+    await fetch(route, requestOptions)
   ).json()
 
-  return response
+  return responseBody
 }
 
 export const signOut = async (
   token: Schema.Token,
-): Promise<Schema.Api.SignOut.Response> => {
+): Promise<Schema.Api.SignOut.Response.Body> => {
   const route: Schema.Api.SignOut.Route = '/sign-out'
 
-  const options: Schema.Api.SignOut.Options = {
+  const requestOptions: Schema.Api.SignOut.Request.Options = {
     method: 'POST',
     headers: {
       Authorization: token,
     },
   }
 
-  const response: Schema.Api.SignOut.Response = await (
-    await fetch(route, options)
+  const responseBody: Schema.Api.SignOut.Response.Body = await (
+    await fetch(route, requestOptions)
   ).json()
 
-  return response
+  return responseBody
 }
 
 export const ping = async (
   token: Schema.Token,
-): Promise<Schema.Api.Ping.Response> => {
+): Promise<Schema.Api.Ping.Response.Body> => {
   const route: Schema.Api.Ping.Route = '/ping'
 
-  const options: Schema.Api.Ping.Options = {
+  const requestOptions: Schema.Api.Ping.Request.Options = {
     method: 'GET',
     headers: {
       Authorization: token,
     },
   }
 
-  const response: Schema.Api.Ping.Response = await (
-    await fetch(route, options)
+  const responseBody: Schema.Api.Ping.Response.Body = await (
+    await fetch(route, requestOptions)
   ).json()
 
-  return response
+  return responseBody
 }

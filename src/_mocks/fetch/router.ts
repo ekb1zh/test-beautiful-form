@@ -5,7 +5,7 @@ import { Schema } from 'src/api'
 export const router = (
   url: RequestInfo | URL,
   options?: RequestInit | undefined,
-): Schema.Api.Response => {
+): Schema.Api.ResponseBody => {
   const { body, headers } = options!
 
   switch (url as Schema.Api.Route) {
