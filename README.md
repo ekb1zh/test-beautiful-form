@@ -1,46 +1,138 @@
-# Getting Started with Create React App
+# test-beautiful-form
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Задача
 
-## Available Scripts
+1. Реализовать удобную и красивую форму аутентификации через почту и пароль.
+2. Не использовать библиотеки.
+3. Замокать [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch) для эмуляции работы сервера.
+4. Результат выложить на [GitHub Pages](https://create-react-app.dev/docs/deployment#github-pages).
 
-In the project directory, you can run:
+### Установка и запуск
 
-### `npm start`
+Установка пакетов
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm i
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Запуск приложения
 
-### `npm test`
+```bash
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Возможности приложения
 
-### `npm run build`
+1. `Sign Up`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   Регистрация нового пользователя и последующий вход на страницу пользователя.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. `Sign In`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   Вход на страницу пользователя.
 
-### `npm run eject`
+3. `Ping`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   Отправка пустого запроса на бекенд и получение случайной строки в ответе.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. `Sign Out`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   Выход.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Язык проекта
 
-## Learn More
+Основным языком проекта является [TypeScript](https://www.typescriptlang.org/).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Стили
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Основные инструменты для стилизации
+
+- [Sass (SCSS)](https://create-react-app.dev/docs/adding-a-sass-stylesheet)
+- [CSS modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet)
+- [Inline styles](https://legacy.reactjs.org/docs/faq-styling.html#can-i-use-inline-styles) используется когда значение стиля можно получить только в процессе выполнения приложения.
+
+Именование классов
+
+- Элемент разметки получает основной класс в стиле `PascalCase`.
+- Помимо основного класса, элемент разметки может получить любое кол-во дополнительных модифицирующих классов в стиле `_camelCase`.
+- Как обычно, классы можно объединять в цепочки.
+
+Например, следующие стили
+
+```scss
+.Button {
+  background: green;
+
+  &_loading {
+    opacity: 0.5;
+  }
+
+  &_hidden {
+    display: none;
+  }
+
+  /* ... */
+}
+```
+
+можно представить так
+
+```ts
+import styles from './Button.module.scss'
+
+const Button = () => {
+  const className = `${styles.Button} ${styles.Button_loading} `
+
+  return (
+    <button type='button' className={className}>
+      Click
+    </button>
+  )
+}
+```
+
+### Тесты
+
+Ещё в работе...
+
+### Файловая структура
+
+Файлы и папки хранятся в соответствии с требованиями [create-react-app](https://create-react-app.dev/docs/folder-structure).
+
+Если папка может рассматриваться как самостоятельный модуль, то такая папка включает `index` файл для определения экспортов доступных для данного модуля. В остальных случаях, папка просто используется для группировки других файлов и папок.
+
+В отдельных файлах модуля также могут храниться: типы, константы, вспомогательные функции, и др.
+
+### Frontend & backend
+
+Проект одновременно включает код фронтенда, а также минимальный и достаточный объём кода для эмуляции работы бекенда.
+
+Весь код бекенда хранится в папке `_mocks`. Остальной код принадлежит фронтенду.
+
+И фронтенд и бекенд совместно используют `localStorage` для хранения данных между сеансами. Утилита `src/utils/LocalStorageItem` предоставляет обёртку, которая упрощает работу с `localStorage`.
+
+В папке `src/api` хранится тип `Schema`. Этот тип описывает исчерпывающий контракт о взаимодействии фронтенда с бекендом.
+
+### Перехват ошибок
+
+Перехватчики ошибок размещаются на двух уровнях
+
+1. Перехватчики ошибок которые перехватывает `React` (хранятся в папке `src/errors`)
+2. Любые неперехваченные ошибки будут перехвачены `глобально` (хранятся в файле `settings/applyGlobalErrorCatching`)
+
+### Глобальные настройки
+
+В папке `src/settings` хранятся настройки, которые применяются глобально ко всему проекту. Каждая настройка выделена в отдельную функцию и вызывается один раз из файла `src/index.tsx`.
+
+### ФП | ООП
+
+Весь React-код написан в стиле ФП (исключая [ErrorBoundary](https://reactjs.org/docs/error-boundaries.html) в папке `src/errors`, т.к. сейчас React не предоставляет аналогичную возможность в стиле ФП).
+
+Стиль ООП используется в случаях
+
+- Если инструмент предполагает создание экземпляров с внутренним состоянием, и методы для управления состоянием.
+- Если требуются возможности ООП которых нет в ФП.
+
+### Interface | Type
+
+В проекте используются [рекомендации из официальной документации TypeScript](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces).
