@@ -1,3 +1,5 @@
+import 'src/styles/index.scss'
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import reportWebVitals from './reportWebVitals'
@@ -6,7 +8,6 @@ import AppPage from 'src/pages/AppPage'
 import { ErrorBoundary } from 'src/errors'
 import { GlobalProvider } from 'src/context'
 import { applyGlobalErrorCatching, applyMocks } from 'src/settings'
-import 'src/styles/index.scss'
 
 applyGlobalErrorCatching()
 applyMocks()
