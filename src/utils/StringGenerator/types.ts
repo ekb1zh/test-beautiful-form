@@ -5,7 +5,7 @@ export type StringGeneratorParams = {
   */
   allowedChars: string
   /*
-    When you call mathod StringGenerator.prototype.next() without param,
+    When you call method StringGenerator.prototype.next() without param,
     will be using this defaultSize.
   */
   defaultSize: number

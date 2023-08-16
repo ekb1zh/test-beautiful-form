@@ -4,7 +4,7 @@ import { router } from 'src/_mocks/fetch/router'
 export const fetch: Window['fetch'] = async (url, options) => {
   await new Promise((resolve) => setTimeout(resolve, DELAY_BEFORE_RESPONSE))
 
-  const response = router(url, options)
+  const responseBody = router(url, options)
 
-  return new Response(JSON.stringify(response))
+  return new Response(JSON.stringify(responseBody))
 }

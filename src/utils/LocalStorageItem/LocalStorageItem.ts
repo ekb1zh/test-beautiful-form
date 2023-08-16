@@ -1,4 +1,4 @@
-export class LocalStorageItem<V extends object = {}> {
+export class LocalStorageItem<V> {
   private KEY: string
 
   constructor(key: string) {

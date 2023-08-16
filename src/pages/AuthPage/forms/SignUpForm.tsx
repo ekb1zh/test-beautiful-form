@@ -19,6 +19,7 @@ const SignUpForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const isPasswordsEquals = passwordValue === repeatPasswordValue
+
   const validation = useMemo(
     () => ({
       email: validateEmail(emailValue),
