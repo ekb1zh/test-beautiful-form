@@ -20,5 +20,5 @@ export default {
     const filesToLint = await removeIgnoredFiles(files)
     return `eslint --max-warnings=0 ${filesToLint}`
   },
-  '*': 'prettier --ignore-unknown --write',
+  '*': [() => 'npm run test:once', 'prettier --ignore-unknown --write'],
 }

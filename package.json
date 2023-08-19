@@ -8,7 +8,9 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:watch": "react-scripts test",
+    "test:once": "npm run test:watch -- --watchAll=false",
+    "test": "npm run test:once",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "check:types": "tsc --noEmit"
