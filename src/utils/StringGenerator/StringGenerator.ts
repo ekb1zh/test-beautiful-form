@@ -14,7 +14,7 @@ export class StringGenerator {
   }
 
   private static isValidSize(size: number): boolean {
-    const isValid = size >= 0 || size <= Number.MAX_SAFE_INTEGER
+    const isValid = size >= 0 && size <= Number.MAX_SAFE_INTEGER
     return isValid
   }
 
