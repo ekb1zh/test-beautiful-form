@@ -144,3 +144,7 @@ const Button = () => {
 ### Interface и type
 
 В проекте используются [рекомендации из официальной документации TypeScript](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces).
+
+### Проверка кода
+
+В файле `.lintstagedrc.mjs` описаны проверки, которые выполняются перед каждым коммитом.
