@@ -1,12 +1,12 @@
 :root {
   box-sizing: border-box;
   height: 100%;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: Ubuntu, sans-serif;
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: inherit;
 }
 

@@ -41,7 +41,7 @@ $left-space: 12px;
   padding: 26px $left-space 8px;
   border-radius: 6px;
   font-size: 1.2rem;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgb(255 255 255 / 50%);
   transition: $transition;
 
   &_password {
@@ -49,11 +49,11 @@ $left-space: 12px;
   }
 
   &:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgb(255 255 255 / 70%);
   }
 
   &:focus:not(:disabled) {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgb(255 255 255 / 90%);
   }
 }
 
