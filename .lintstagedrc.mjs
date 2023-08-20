@@ -21,8 +21,8 @@ export default {
   },
   '*': [
     () => 'npm run lint:ts',
-    () => 'npm run test:once',
     () => 'npm run lint:styles',
+    () => 'npm run test:once',
     'prettier --ignore-unknown --write',
   ],
 }
