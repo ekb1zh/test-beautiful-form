@@ -15,10 +15,14 @@ const removeIgnoredFiles = async (files) => {
 }
 
 export default {
-  '**/*.ts?(x)': () => 'tsc --noEmit',
   '**/*.{ts?(x),js?(x)}': async (files) => {
     const filesToLint = await removeIgnoredFiles(files)
     return `eslint --max-warnings=0 ${filesToLint}`
   },
-  '*': [() => 'npm run test:once', 'prettier --ignore-unknown --write'],
+  '*': [
+    () => 'npm run lint:ts',
+    () => 'npm run test:once',
+    () => 'npm run lint:styles',
+    'prettier --ignore-unknown --write',
+  ],
 }
