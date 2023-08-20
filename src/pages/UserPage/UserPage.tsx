@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react'
+import cloneDeep from 'lodash.clonedeep'
 
 import Button from 'src/components/Button'
 import LinkButton from 'src/components/LinkButton'
 
-import { GlobalContextValue, useGlobalContext } from 'src/context'
+import { useGlobalContext } from 'src/context'
 import { signOut, ping } from 'src/api'
 import styles from 'src/pages/UserPage/UserPage.module.scss'
 
@@ -23,7 +24,7 @@ const UserPage: React.FC = () => {
       }
 
       setContext((prev) => {
-        const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
+        const next = cloneDeep(prev)
         delete next.token
         delete next.user
 

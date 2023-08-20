@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react'
+import cloneDeep from 'lodash.clonedeep'
 
 import Input, { InputProps } from 'src/components/Input'
 import Button from 'src/components/Button'
 
-import { GlobalContextValue, useGlobalContext } from 'src/context'
+import { useGlobalContext } from 'src/context'
 import { validateEmail, validatePassword } from 'src/utils'
 import { signIn, Schema } from 'src/api'
 import styles from 'src/pages/AuthPage/forms/Form.module.scss'
@@ -92,7 +93,7 @@ const SignInForm: React.FC = () => {
         }
 
         setContext((prev) => {
-          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
+          const next = cloneDeep(prev)
           next.token = token
           next.user = user
 

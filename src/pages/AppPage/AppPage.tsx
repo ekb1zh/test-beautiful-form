@@ -1,13 +1,10 @@
 import React, { useEffect, useMemo } from 'react'
+import cloneDeep from 'lodash.clonedeep'
 
 import AuthPage from 'src/pages/AuthPage'
 import UserPage from 'src/pages/UserPage'
 import Main from 'src/components/Main/Main'
-import {
-  useGlobalContext,
-  createDefaultValue,
-  GlobalContextValue,
-} from 'src/context'
+import { useGlobalContext, createDefaultValue } from 'src/context'
 
 const AppPage: React.FC = () => {
   const [{ token, user, page }, setContext] = useGlobalContext()
@@ -30,7 +27,7 @@ const AppPage: React.FC = () => {
     if (token && user) {
       if (page !== 'user') {
         setContext((prev) => {
-          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
+          const next = cloneDeep(prev)
           next.page = 'user'
 
           return next
@@ -39,7 +36,7 @@ const AppPage: React.FC = () => {
     } else if (!token && !user) {
       if (page !== 'auth') {
         setContext((prev) => {
-          const next: GlobalContextValue = JSON.parse(JSON.stringify(prev)) // better do it with lodash.cloneDeep
+          const next = cloneDeep(prev)
           next.page = 'auth'
 
           return next

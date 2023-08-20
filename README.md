@@ -3,7 +3,7 @@
 ### Идея
 
 1. Реализовать удобную и красивую форму аутентификации через почту и пароль.
-2. Не использовать библиотеки.
+2. Не использовать библиотеки компонентов.
 3. Замокать [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch) для эмуляции работы сервера.
 4. Результат выложить на [GitHub Pages](https://create-react-app.dev/docs/deployment#github-pages).
 
