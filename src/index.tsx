@@ -2,10 +2,11 @@ import 'src/styles/index.scss'
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { ErrorBoundary } from 'react-error-boundary'
 // import reportWebVitals from './reportWebVitals'
 
 import AppPage from 'src/pages/AppPage'
-import { ErrorBoundary } from 'src/errors'
+import ErrorPage from 'src/pages/ErrorPage'
 import { GlobalProvider } from 'src/context'
 import { applyGlobalErrorCatching, applyMocks } from 'src/settings'
 
@@ -16,7 +17,7 @@ const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
+    <ErrorBoundary FallbackComponent={ErrorPage}>
       <GlobalProvider>
         <AppPage />
       </GlobalProvider>
