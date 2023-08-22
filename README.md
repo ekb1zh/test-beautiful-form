@@ -2,7 +2,7 @@
 
 ### Идея
 
-1. Реализовать стилизованную, удобную форму аутентификации через почту и пароль.
+1. Реализовать форму аутентификации через почту и пароль.
 2. Не использовать библиотеки компонентов.
 3. Замокать [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch) для эмуляции работы сервера.
 4. Результат выложить на [GitHub Pages](https://create-react-app.dev/docs/deployment#github-pages).
@@ -57,59 +57,18 @@ npm test
 
 ### Стили
 
-Основные инструменты для стилизации
+Инструменты для стилизации
 
-- [Sass (SCSS)](https://create-react-app.dev/docs/adding-a-sass-stylesheet)
-- [CSS modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet)
-- [Inline styles](https://legacy.reactjs.org/docs/faq-styling.html#can-i-use-inline-styles) используется когда значение стиля можно получить только в процессе выполнения приложения.
-
-Именование классов
-
-- Элемент разметки получает основной класс в стиле `PascalCase`.
-- Помимо основного класса, элемент разметки может получить любое кол-во дополнительных модифицирующих классов в стиле `_camelCase`.
-- Как обычно, классы можно объединять в цепочки.
-
-Например, следующие стили
-
-```scss
-.Button {
-  background: green;
-
-  &_loading {
-    opacity: 0.5;
-  }
-
-  &_hidden {
-    display: none;
-  }
-
-  /* ... */
-}
-```
-
-можно представить так
-
-```ts
-import styles from './Button.module.scss'
-
-const Button = () => {
-  const className = `${styles.Button} ${styles.Button_loading} `
-
-  return (
-    <button type='button' className={className}>
-      Click
-    </button>
-  )
-}
-```
+- [Sass (SCSS)](https://create-react-app.dev/docs/adding-a-sass-stylesheet) для продвинутого синтаксиса
+- [CSS modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet) для инкапсуляции стилей
+- [Classnames](https://www.npmjs.com/package/classnames) для объединения классов
+- [Inline styles](https://legacy.reactjs.org/docs/faq-styling.html#can-i-use-inline-styles) для добавления стиля, значение которого можно получить только в процессе выполнения приложения.
 
 ### Файловая структура
 
 Файлы и папки хранятся в соответствии с требованиями [create-react-app](https://create-react-app.dev/docs/folder-structure).
 
-Если папка может рассматриваться как самостоятельный модуль, то такая папка включает `index` файл для определения экспортов доступных для данного модуля. В остальных случаях, папка просто используется для группировки других файлов и папок.
-
-В отдельных файлах модуля также могут храниться: типы, константы, вспомогательные функции, и др.
+Если папка является модулем, то такая папка включает `index` файл для определения экспортов доступных для данного модуля. В остальных случаях, папка просто используется для группировки других файлов и папок.
 
 ### Фронтенд и бекенд
 
@@ -125,7 +84,7 @@ const Button = () => {
 
 Перехватчики ошибок размещаются на двух уровнях
 
-1. Перехватчики ошибок которые перехватывает `React` (хранятся в папке `src/errors`)
+1. Перехватчики ошибок, которые перехватывает `React` (хранятся в папке `src/errors`)
 2. Любые неперехваченные ошибки будут перехвачены `глобально` (хранятся в файле `settings/applyGlobalErrorCatching`)
 
 ### Глобальные настройки
