@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import cn from 'classnames'
 
 import Icon from 'src/components/Icon'
 import { StringGenerator } from 'src/utils'
@@ -27,45 +28,10 @@ const Input: React.FC<T.InputProps> = ({
     () => (isValueVisible ? <Icon.EyeClose /> : <Icon.EyeOpen />),
     [isValueVisible],
   )
-  const classes = useMemo(() => {
-    const classes = { ...styles }
 
-    /*
-      Update label styles
-    */
-    {
-      const isValueEmpty = inputRef.current
-        ? inputRef.current.value.length === 0
-        : true
-
-      let label = classes.Label
-
-      label += ' '
-      label += isFocused
-        ? classes.Label_small
-        : isValueEmpty
-        ? classes.Label_big
-        : classes.Label_small
-
-      classes.Label = label
-    }
-
-    /*
-      Update root styles
-    */
-    if (disabled) {
-      classes.RootContainer = classes.RootContainer_disabled
-    }
-
-    /*
-      Update styles for password type
-    */
-    if (type === 'password') {
-      classes.Input = `${classes.Input} ${classes.Input_password}`
-    }
-
-    return classes
-  }, [disabled, isFocused, type])
+  const isValueEmpty = inputRef.current
+    ? inputRef.current.value.length === 0
+    : true
 
   const onFocusInput = () => setIsFocused(true)
   const onBlurInput = () => setIsFocused(false)
@@ -98,13 +64,13 @@ const Input: React.FC<T.InputProps> = ({
     }
 
   return (
-    <div className={classes.RootContainer}>
-      <div className={classes.InnerContainer}>
+    <div className={cn(styles.RootContainer, disabled && styles.disabled)}>
+      <div className={styles.InnerContainer}>
         <input
           ref={inputRef}
           type={isValueVisible ? 'text' : 'password'}
           id={id}
-          className={classes.Input}
+          className={cn(styles.Input, type === 'password' && styles.password)}
           onFocus={onFocusInput}
           onBlur={onBlurInput}
           disabled={disabled}
@@ -112,7 +78,17 @@ const Input: React.FC<T.InputProps> = ({
         />
 
         {typeof label === 'string' && (
-          <label className={classes.Label} htmlFor={id}>
+          <label
+            className={cn(
+              styles.Label,
+              isFocused
+                ? styles.small
+                : isValueEmpty
+                ? styles.big
+                : styles.small,
+            )}
+            htmlFor={id}
+          >
             {label}
           </label>
         )}
@@ -120,7 +96,7 @@ const Input: React.FC<T.InputProps> = ({
         {type === 'password' && (
           <button
             type='button'
-            className={classes.EyeButton}
+            className={styles.EyeButton}
             onMouseDown={onMouseDownEyeButton}
             onKeyDown={onKeyDownEyeButton}
             disabled={disabled}
@@ -131,7 +107,7 @@ const Input: React.FC<T.InputProps> = ({
       </div>
 
       {typeof errorText === 'string' && (
-        <div className={classes.ErrorMessage}>{errorText}</div>
+        <div className={styles.ErrorMessage}>{errorText}</div>
       )}
     </div>
   )
