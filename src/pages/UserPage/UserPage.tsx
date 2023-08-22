@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import cloneDeep from 'lodash.clonedeep'
 
 import Button from 'src/components/Button'
@@ -67,6 +67,10 @@ const UserPage: React.FC = () => {
 
     return items
   }, [pongMessage, token, user?.email, user?.password])
+
+  useEffect(() => {
+    document.title = 'User'
+  }, [])
 
   return (
     <div className={styles.Root}>

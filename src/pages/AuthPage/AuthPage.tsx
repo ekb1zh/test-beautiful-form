@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 /* 
   SignInForm and SignUpForm potentially can be absolutely different,
@@ -15,6 +15,10 @@ const AuthPage: React.FC = () => {
   const onClick = () => {
     setIsSignInMode((prev) => !prev)
   }
+
+  useEffect(() => {
+    document.title = 'Auth'
+  }, [])
 
   return (
     <div className={styles.Root}>
