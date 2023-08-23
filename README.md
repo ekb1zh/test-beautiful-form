@@ -61,7 +61,7 @@ npm test
 
 - [Sass (SCSS)](https://create-react-app.dev/docs/adding-a-sass-stylesheet) для продвинутого синтаксиса
 - [CSS modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet) для инкапсуляции стилей
-- [Classnames](https://www.npmjs.com/package/classnames) для объединения классов
+- [Clsx](https://github.com/lukeed/clsx) для объединения классов
 - [Inline styles](https://legacy.reactjs.org/docs/faq-styling.html#can-i-use-inline-styles) для добавления стиля, значение которого можно получить только в процессе выполнения приложения.
 
 ### Файловая структура
