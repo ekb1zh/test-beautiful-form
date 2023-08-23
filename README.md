@@ -64,6 +64,8 @@ npm test
 - [Clsx](https://github.com/lukeed/clsx) для объединения классов
 - [Inline styles](https://legacy.reactjs.org/docs/faq-styling.html#can-i-use-inline-styles) для добавления стиля, значение которого можно получить только в процессе выполнения приложения.
 
+> Приложение создано с акцентом на производительность. Исходя из этого подбирались все инструменты. При этом, скоро будет создан клон этого приложения с использованием [styled-components](https://styled-components.com/).
+
 ### Файловая структура
 
 Файлы и папки хранятся в соответствии с требованиями [create-react-app](https://create-react-app.dev/docs/folder-structure).
