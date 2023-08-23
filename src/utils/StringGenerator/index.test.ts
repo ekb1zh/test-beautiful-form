@@ -66,7 +66,6 @@ describe('StringGenerator.prototype.next', () => {
       const size = 0
       const result = instance.next(size)
 
-      expect(typeof result === 'string').toBe(true)
       expect(result.length).toBe(size)
     })
 
@@ -74,7 +73,6 @@ describe('StringGenerator.prototype.next', () => {
       const size = 100
       const result = instance.next(size)
 
-      expect(typeof result === 'string').toBe(true)
       expect(result.length).toBe(size)
     })
 

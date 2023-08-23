@@ -104,7 +104,7 @@ const SignInForm: React.FC = () => {
             Sing In
           </Button>
 
-          {typeof responseError === 'string' && (
+          {responseError && (
             <p className={styles.ErrorMessage}>{responseError}</p>
           )}
         </div>
