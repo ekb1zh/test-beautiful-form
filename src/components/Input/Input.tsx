@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import cn from 'classnames'
+import cx from 'clsx'
 
 import Icon from 'src/components/Icon'
 import { StringGenerator } from 'src/utils'
@@ -64,13 +64,13 @@ const Input: React.FC<T.InputProps> = ({
     }
 
   return (
-    <div className={cn(styles.RootContainer, disabled && styles.disabled)}>
+    <div className={cx(styles.RootContainer, disabled && styles.disabled)}>
       <div className={styles.InnerContainer}>
         <input
           ref={inputRef}
           type={isValueVisible ? 'text' : 'password'}
           id={id}
-          className={cn(styles.Input, type === 'password' && styles.password)}
+          className={cx(styles.Input, type === 'password' && styles.password)}
           onFocus={onFocusInput}
           onBlur={onBlurInput}
           disabled={disabled}
@@ -79,7 +79,7 @@ const Input: React.FC<T.InputProps> = ({
 
         {typeof label === 'string' && (
           <label
-            className={cn(
+            className={cx(
               styles.Label,
               isFocused
                 ? styles.small
