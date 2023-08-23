@@ -1,5 +1,5 @@
-import React, { forwardRef, useEffect, useId, useRef, useState } from 'react'
-import cx from 'clsx'
+import { forwardRef, useEffect, useId, useRef, useState } from 'react'
+import clsx from 'clsx'
 
 import Icon from 'src/components/Icon'
 import styles from 'src/components/Input/Input.module.scss'
@@ -79,21 +79,24 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
     return (
       <div
         ref={rootRef}
-        className={cx(styles.RootContainer, disabled && styles.disabled)}
+        className={clsx(styles.RootContainer, disabled && styles.disabled)}
       >
         <div className={styles.InnerContainer}>
           <input
             ref={inputRef}
             type={isValueVisible ? 'text' : 'password'}
             id={id}
-            className={cx(styles.Input, type === 'password' && styles.password)}
+            className={clsx(
+              styles.Input,
+              type === 'password' && styles.password,
+            )}
             disabled={disabled}
             {...other}
           />
 
           {label && (
             <label
-              className={cx(
+              className={clsx(
                 styles.Label,
                 isFocused
                   ? styles.small
