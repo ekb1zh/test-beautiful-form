@@ -1,4 +1,4 @@
-import { LocalStorageItem } from 'src/utils/LocalStorageItem'
+import { LocalStorageItem } from 'src/utils'
 
 describe('LocalStorageItem.prototype.constructor', () => {
   describe('key', () => {
@@ -26,7 +26,7 @@ describe('LocalStorageItem.prototype.read', () => {
   test('correct return null', () => {
     const storage = new LocalStorageItem(key)
     const data = storage.read()
-    expect(data === null).toBe(true)
+    expect(data).toBe(null)
   })
 
   test('correct return data', () => {
@@ -50,8 +50,6 @@ describe('LocalStorageItem.prototype.read', () => {
 
 test('LocalStorageItem.prototype.write', () => {
   const key = ''
-  localStorage.removeItem(key)
-
   const storage = new LocalStorageItem(key)
   const dataWrite = '12345'
   storage.write(dataWrite)
@@ -64,13 +62,12 @@ test('LocalStorageItem.prototype.write', () => {
 
 test('LocalStorageItem.prototype.delete', () => {
   const key = ''
-  localStorage.removeItem(key)
   localStorage.setItem(key, '')
 
   const storage = new LocalStorageItem(key)
   storage.delete()
 
-  expect(localStorage.getItem(key) === null).toBe(true)
+  expect(localStorage.getItem(key)).toBe(null)
 })
 
 test('LocalStorageItem all operations', () => {
@@ -85,10 +82,8 @@ test('LocalStorageItem all operations', () => {
     },
   }
 
-  localStorage.removeItem(key)
-
   const storage = new LocalStorageItem(key)
-  expect(storage.read() === null).toBe(true)
+  expect(storage.read()).toBe(null)
 
   storage.write(dataWrite)
   expect(storage.read()).toStrictEqual(dataWrite)
@@ -97,7 +92,7 @@ test('LocalStorageItem all operations', () => {
   expect(storage.read()).toStrictEqual(dataWrite)
 
   storage.delete()
-  expect(storage.read() === null).toBe(true)
+  expect(storage.read()).toBe(null)
 
   storage.write(dataWrite)
   expect(storage.read()).toStrictEqual(dataWrite)
