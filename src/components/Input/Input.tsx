@@ -1,15 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react'
 import cx from 'clsx'
 
 import Icon from 'src/components/Icon'
-import { StringGenerator } from 'src/utils'
 import styles from 'src/components/Input/Input.module.scss'
 import type * as T from 'src/components/Input/types'
-
-const stringGenerator = new StringGenerator({
-  allowedChars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
-  defaultSize: 4,
-})
 
 const Input: React.FC<T.InputProps> = ({
   label,
@@ -23,7 +17,7 @@ const Input: React.FC<T.InputProps> = ({
   const [isValueVisible, setIsValueVisible] = useState(type !== 'password')
   const [isFocused, setIsFocused] = useState(false)
 
-  const id = useMemo(() => stringGenerator.next(), [])
+  const id = useId()
   const eyeIcon = useMemo(
     () => (isValueVisible ? <Icon.EyeClose /> : <Icon.EyeOpen />),
     [isValueVisible],
