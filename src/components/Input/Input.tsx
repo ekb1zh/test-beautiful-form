@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import React, { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import cx from 'clsx'
 
 import Icon from 'src/components/Icon'
@@ -13,25 +6,46 @@ import styles from 'src/components/Input/Input.module.scss'
 import type * as T from 'src/components/Input/types'
 
 const Input = forwardRef<HTMLDivElement, T.InputProps>(
-  ({ label, type, errorText, disabled, ...other }, ref) => {
+  ({ label, type, errorText, disabled, ...other }, rootRef) => {
     const inputRef = useRef<HTMLInputElement>(null)
+    const eyeButtonRef = useRef<HTMLButtonElement>(null)
 
     const [isValueVisible, setIsValueVisible] = useState(type !== 'password')
     const [isFocused, setIsFocused] = useState(false)
 
     const id = useId()
 
-    const eyeIcon = useMemo(
-      () => (isValueVisible ? <Icon.EyeClose /> : <Icon.EyeOpen />),
-      [isValueVisible],
-    )
-
     const isValueEmpty = inputRef.current
       ? inputRef.current.value.length === 0
       : true
 
-    const onMouseDownEyeButton: React.ButtonHTMLAttributes<HTMLButtonElement>['onMouseDown'] =
-      (event) => {
+    useEffect(() => {
+      setIsValueVisible(type !== 'password')
+    }, [type])
+
+    useEffect(() => {
+      const { current: input } = inputRef
+
+      const onFocus = () => setIsFocused(true)
+      const onBlur = () => setIsFocused(false)
+
+      if (input) {
+        input.addEventListener('focus', onFocus, true)
+        input.addEventListener('blur', onBlur, true)
+      }
+
+      return () => {
+        if (input) {
+          input.removeEventListener('focus', onFocus, true)
+          input.removeEventListener('blur', onBlur, true)
+        }
+      }
+    }, [])
+
+    useEffect(() => {
+      const { current: button } = eyeButtonRef
+
+      const onMouseDown = (event: MouseEvent) => {
         if (inputRef.current === document.activeElement) {
           event.preventDefault()
         }
@@ -39,8 +53,7 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
         setIsValueVisible((prev) => !prev)
       }
 
-    const onKeyDownEyeButton: React.ButtonHTMLAttributes<HTMLButtonElement>['onKeyDown'] =
-      (event) => {
+      const onKeyDown = (event: KeyboardEvent) => {
         const { code } = event
         const isEnter = code === 'Enter'
         const isSpace = code === 'Space' || code === ' ' || code === 'Spacebar'
@@ -50,33 +63,22 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
         }
       }
 
-    useEffect(() => {
-      setIsValueVisible(type !== 'password')
-    }, [type])
+      if (button) {
+        button.addEventListener('mousedown', onMouseDown, true)
+        button.addEventListener('keydown', onKeyDown, true)
+      }
 
-    useEffect(() => {
-      const { current: input } = inputRef
-
-      const events = [
-        ['focus', () => setIsFocused(true)],
-        ['blur', () => setIsFocused(false)],
-      ] as const
-
-      events.forEach(
-        ([event, handler]) =>
-          input && input.addEventListener(event, handler, true),
-      )
-
-      return () =>
-        events.forEach(
-          ([event, handler]) =>
-            input && input.removeEventListener(event, handler, true),
-        )
+      return () => {
+        if (button) {
+          button.removeEventListener('mousedown', onMouseDown, true)
+          button.removeEventListener('keydown', onKeyDown, true)
+        }
+      }
     }, [])
 
     return (
       <div
-        ref={ref}
+        ref={rootRef}
         className={cx(styles.RootContainer, disabled && styles.disabled)}
       >
         <div className={styles.InnerContainer}>
@@ -89,7 +91,7 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
             {...other}
           />
 
-          {typeof label === 'string' && (
+          {label && (
             <label
               className={cx(
                 styles.Label,
@@ -107,20 +109,17 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
 
           {type === 'password' && (
             <button
+              ref={eyeButtonRef}
               type='button'
               className={styles.EyeButton}
-              onMouseDown={onMouseDownEyeButton}
-              onKeyDown={onKeyDownEyeButton}
               disabled={disabled}
             >
-              {eyeIcon}
+              {isValueVisible ? <Icon.EyeClose /> : <Icon.EyeOpen />}
             </button>
           )}
         </div>
 
-        {typeof errorText === 'string' && (
-          <div className={styles.ErrorMessage}>{errorText}</div>
-        )}
+        {errorText && <div className={styles.ErrorMessage}>{errorText}</div>}
       </div>
     )
   },
