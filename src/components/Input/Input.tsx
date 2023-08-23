@@ -20,6 +20,7 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
     const [isFocused, setIsFocused] = useState(false)
 
     const id = useId()
+
     const eyeIcon = useMemo(
       () => (isValueVisible ? <Icon.EyeClose /> : <Icon.EyeOpen />),
       [isValueVisible],
@@ -29,24 +30,14 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
       ? inputRef.current.value.length === 0
       : true
 
-    const onFocusInput = () => setIsFocused(true)
-    const onBlurInput = () => setIsFocused(false)
-
     const onMouseDownEyeButton: React.ButtonHTMLAttributes<HTMLButtonElement>['onMouseDown'] =
       (event) => {
-        /*
-        Prevent focus out
-      */
         if (inputRef.current === document.activeElement) {
           event.preventDefault()
         }
 
         setIsValueVisible((prev) => !prev)
       }
-
-    useEffect(() => {
-      setIsValueVisible(type !== 'password')
-    }, [type])
 
     const onKeyDownEyeButton: React.ButtonHTMLAttributes<HTMLButtonElement>['onKeyDown'] =
       (event) => {
@@ -59,6 +50,30 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
         }
       }
 
+    useEffect(() => {
+      setIsValueVisible(type !== 'password')
+    }, [type])
+
+    useEffect(() => {
+      const { current: input } = inputRef
+
+      const events = [
+        ['focus', () => setIsFocused(true)],
+        ['blur', () => setIsFocused(false)],
+      ] as const
+
+      events.forEach(
+        ([event, handler]) =>
+          input && input.addEventListener(event, handler, true),
+      )
+
+      return () =>
+        events.forEach(
+          ([event, handler]) =>
+            input && input.removeEventListener(event, handler, true),
+        )
+    }, [])
+
     return (
       <div
         ref={ref}
@@ -70,8 +85,6 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
             type={isValueVisible ? 'text' : 'password'}
             id={id}
             className={cx(styles.Input, type === 'password' && styles.password)}
-            onFocus={onFocusInput}
-            onBlur={onBlurInput}
             disabled={disabled}
             {...other}
           />
