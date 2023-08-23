@@ -1,12 +1,6 @@
-import { StringGenerator, LocalStorageItem } from 'src/utils'
+import { generateString, LocalStorageItem } from 'src/utils'
 import { BACKEND_STORAGE_NAME } from 'src/_mocks/fetch/constants'
 import type * as T from 'src/_mocks/fetch/types'
-
-export const stringGenerator = new StringGenerator({
-  allowedChars:
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-  defaultSize: 20,
-})
 
 export const storage = (() => {
   const storage = new LocalStorageItem<T.UsersStorage>(BACKEND_STORAGE_NAME)
@@ -26,7 +20,7 @@ export const storage = (() => {
 })()
 
 export const generateBearerToken = () => {
-  const token = `Bearer ${stringGenerator.next()}`
+  const token = `Bearer ${generateString(20)}`
 
   return token
 }

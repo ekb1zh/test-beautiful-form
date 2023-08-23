@@ -1,5 +1,5 @@
 import { storage } from 'src/_mocks/fetch/utils'
-import { stringGenerator } from 'src/_mocks/fetch/utils'
+import { generateString } from 'src/utils'
 import { Schema } from 'src/api'
 
 export const ping = (headers: HeadersInit): Schema.Api.Ping.Response.Body => {
@@ -11,7 +11,7 @@ export const ping = (headers: HeadersInit): Schema.Api.Ping.Response.Body => {
       throw new Error(`Incorrect token`)
     }
 
-    const pong = stringGenerator.next(6)
+    const pong = generateString(6)
 
     return {
       pong,
