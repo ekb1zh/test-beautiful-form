@@ -6,5 +6,5 @@ export const fetch: Window['fetch'] = async (url, options) => {
 
   const responseBody = router(url, options)
 
-  return new Response(JSON.stringify(responseBody))
+  return new window.Response(JSON.stringify(responseBody))
 }
