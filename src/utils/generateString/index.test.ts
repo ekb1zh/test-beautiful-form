@@ -25,11 +25,12 @@ describe('generateString', () => {
 
   describe('empty chars', () => {
     const chars = ''
+    const result = ''
 
     test('any length', () => {
       for (let i = 0; i < 100; ++i) {
         const length = Math.floor(Math.random() * 10e14)
-        expect(generateString(length, chars).length).toBe(0)
+        expect(generateString(length, chars)).toBe(result)
       }
     })
   })
