@@ -1,18 +1,12 @@
 import { LocalStorageItem } from 'src/utils'
 
 describe('LocalStorageItem.prototype.constructor', () => {
-  describe('key', () => {
-    const createResult = (key: string) => () => new LocalStorageItem(key)
-
-    test('valid min length', () => {
-      const key = ''
-      expect(createResult(key)).not.toThrow()
-    })
-
-    test('valid normal length', () => {
-      const key = 'ANY_KEY'
-      expect(createResult(key)).not.toThrow()
-    })
+  test('any key => should not throw', () => {
+    const limit = 10
+    for (let i = 0; i < limit; ++i) {
+      const key = String(Math.random())
+      expect(() => new LocalStorageItem(key)).not.toThrow()
+    }
   })
 })
 
@@ -23,13 +17,13 @@ describe('LocalStorageItem.prototype.read', () => {
     localStorage.removeItem(key)
   })
 
-  test('correct return null', () => {
+  test('read empty storage => should return null', () => {
     const storage = new LocalStorageItem(key)
     const data = storage.read()
     expect(data).toBe(null)
   })
 
-  test('correct return data', () => {
+  test('read not empty storage => should return data', () => {
     const dataWrite = {
       a: 0,
       b: true,
@@ -48,29 +42,33 @@ describe('LocalStorageItem.prototype.read', () => {
   })
 })
 
-test('LocalStorageItem.prototype.write', () => {
-  const key = ''
-  const storage = new LocalStorageItem(key)
-  const dataWrite = '12345'
-  storage.write(dataWrite)
+describe('LocalStorageItem.prototype.write', () => {
+  test('after write data => storage should has data', () => {
+    const key = ''
+    const storage = new LocalStorageItem(key)
+    const dataWrite = '12345'
+    storage.write(dataWrite)
 
-  const dataRead = localStorage.getItem(key)!
-  const dataReadParsed = JSON.parse(dataRead)
+    const dataRead = localStorage.getItem(key)!
+    const dataReadParsed = JSON.parse(dataRead)
 
-  expect(dataWrite).toStrictEqual(dataReadParsed)
+    expect(dataWrite).toStrictEqual(dataReadParsed)
+  })
 })
 
-test('LocalStorageItem.prototype.delete', () => {
-  const key = ''
-  localStorage.setItem(key, '')
+describe('LocalStorageItem.prototype.delete', () => {
+  test('after delete data => storage should not has data', () => {
+    const key = ''
+    localStorage.setItem(key, '')
 
-  const storage = new LocalStorageItem(key)
-  storage.delete()
+    const storage = new LocalStorageItem(key)
+    storage.delete()
 
-  expect(localStorage.getItem(key)).toBe(null)
+    expect(localStorage.getItem(key)).toBe(null)
+  })
 })
 
-test('LocalStorageItem all operations', () => {
+test('any operations => should return correct result', () => {
   const key = ''
   const dataWrite = {
     a: 0,
