@@ -53,10 +53,8 @@ const SignInForm: React.FC = () => {
       const user: Schema.User = formValues
       const { token, error } = await signIn(user)
 
-      setResponseError(error ? error : null)
-
-      if (error || typeof token !== 'string') {
-        throw new Error(error || token)
+      if (error) {
+        throw new Error(error)
       }
 
       setContext((prev) => {
@@ -68,6 +66,7 @@ const SignInForm: React.FC = () => {
       })
     } catch (error) {
       console.error(error)
+      setResponseError(error instanceof Error ? error?.message : String(error))
     } finally {
       setIsLoading(false)
     }

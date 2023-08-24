@@ -22,8 +22,8 @@ const schema = yup.object({
   password: yup.string().min(8).required(),
   repeatPassword: yup
     .string()
-    .oneOf([yup.ref('password')], 'repeat password is not equal')
     .min(8, 'repeat password must be at least 8 characters')
+    .oneOf([yup.ref('password')], 'repeat password is not equal')
     .required(),
 })
 
@@ -60,10 +60,8 @@ const SignUpForm: React.FC = () => {
       const user: Schema.User = { email, password }
       const { token, error } = await signUp(user)
 
-      setResponseError(error ? error : null)
-
-      if (error || typeof token !== 'string') {
-        throw new Error(error || token)
+      if (error) {
+        throw new Error(error)
       }
 
       setContext((prev) => {
@@ -75,6 +73,7 @@ const SignUpForm: React.FC = () => {
       })
     } catch (error) {
       console.error(error)
+      setResponseError(error instanceof Error ? error?.message : String(error))
     } finally {
       setIsLoading(false)
     }
