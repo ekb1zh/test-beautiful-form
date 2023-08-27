@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import cloneDeep from 'lodash.clonedeep'
 
 import Button from 'src/components/Button'
 import LinkButton from 'src/components/LinkButton'
@@ -23,12 +22,9 @@ const UserPage: React.FC = () => {
         throw new Error(error)
       }
 
-      setContext((prev) => {
-        const next = cloneDeep(prev)
-        delete next.token
-        delete next.user
-
-        return next
+      setContext((draft) => {
+        delete draft.token
+        delete draft.user
       })
     } catch (error) {
       console.error(error)
@@ -42,11 +38,11 @@ const UserPage: React.FC = () => {
 
     try {
       const { pong, error } = await ping(token!)
-      if (error || typeof pong !== 'string') {
+      if (error) {
         throw new Error(error)
       }
 
-      setPongMessage(pong)
+      setPongMessage(pong!)
     } catch (error) {
       console.error(error)
     } finally {

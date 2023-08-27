@@ -1,10 +1,5 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
+import { ImmerHook, useImmer } from 'use-immer'
 
 import { LocalStorageItem } from 'src/utils'
 import type * as T from 'src/context/types'
@@ -34,7 +29,7 @@ const storage = (() => {
 /*
   Global context
 */
-const GlobalContext = createContext<T.GlobalContext>([
+const GlobalContext = createContext<ImmerHook<T.GlobalContextValue>>([
   createDefaultValue(),
   () => {},
 ])
@@ -51,21 +46,12 @@ const initialValue = (): T.GlobalContextValue => {
 export const GlobalProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [state, setState] = useState(initialValue)
+  const value = useImmer(initialValue)
+  const [state] = value
 
-  const setStateWrapper: T.GlobalContextSetter = useCallback((value) => {
-    setState((prev) => {
-      const next = typeof value === 'function' ? value(prev) : value
-      storage.write(next)
-
-      return next
-    })
-  }, [])
-
-  const value = useMemo(
-    () => [state, setStateWrapper] as const,
-    [setStateWrapper, state],
-  )
+  useEffect(() => {
+    storage.write(state)
+  }, [state])
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>

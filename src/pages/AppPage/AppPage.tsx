@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from 'react'
-import cloneDeep from 'lodash.clonedeep'
 
 import AuthPage from 'src/pages/AuthPage'
 import UserPage from 'src/pages/UserPage'
@@ -26,20 +25,14 @@ const AppPage: React.FC = () => {
     */
     if (token && user) {
       if (page !== 'user') {
-        setContext((prev) => {
-          const next = cloneDeep(prev)
-          next.page = 'user'
-
-          return next
+        setContext((draft) => {
+          draft.page = 'user'
         })
       }
     } else if (!token && !user) {
       if (page !== 'auth') {
-        setContext((prev) => {
-          const next = cloneDeep(prev)
-          next.page = 'auth'
-
-          return next
+        setContext((draft) => {
+          draft.page = 'auth'
         })
       }
     } else {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import cloneDeep from 'lodash.clonedeep'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -64,12 +63,9 @@ const SignUpForm: React.FC = () => {
         throw new Error(error)
       }
 
-      setContext((prev) => {
-        const next = cloneDeep(prev)
-        next.token = token
-        next.user = user
-
-        return next
+      setContext((draft) => {
+        draft.token = token
+        draft.user = user
       })
     } catch (error) {
       console.error(error)
