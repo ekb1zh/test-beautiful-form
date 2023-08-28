@@ -8,6 +8,29 @@ export type Token = string // for example `Bearer ${string}`
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type SerializedJson<T> = string
 
+export namespace Network {
+  export interface IdleState {
+    status: 'idle'
+  }
+
+  export interface LoadingState {
+    status: 'loading'
+  }
+
+  export interface SuccessState {
+    status: 'success'
+  }
+
+  export interface ErrorState {
+    status: 'error'
+    message: string
+  }
+
+  export type RequestState = IdleState | LoadingState
+  export type ResponseState = SuccessState | ErrorState
+  export type State<R extends ResponseState = ResponseState> = RequestState | R
+}
+
 export namespace Api {
   export type Route = SignUp.Route | SignIn.Route | SignOut.Route | Ping.Route
 
@@ -19,6 +42,7 @@ export namespace Api {
 
   export namespace SignUp {
     export type Route = '/sign-up'
+    export type State = Network.State<Response.Body>
 
     export namespace Request {
       export interface Body {
@@ -35,15 +59,17 @@ export namespace Api {
     }
 
     export namespace Response {
-      export interface Body {
-        token?: Token
-        error?: string
+      export interface Success extends Network.SuccessState {
+        token: string
       }
+      export interface Error extends Network.ErrorState {}
+      export type Body = Success | Error
     }
   }
 
   export namespace SignIn {
     export type Route = '/sign-in'
+    export type State = Network.State<Response.Body>
 
     export namespace Request {
       export interface Body {
@@ -60,15 +86,17 @@ export namespace Api {
     }
 
     export namespace Response {
-      export interface Body {
-        token?: Token
-        error?: string
+      export interface Success extends Network.SuccessState {
+        token: string
       }
+      export interface Error extends Network.ErrorState {}
+      export type Body = Success | Error
     }
   }
 
   export namespace SignOut {
     export type Route = '/sign-out'
+    export type State = Network.State<Response.Body>
 
     export namespace Request {
       export interface Options {
@@ -80,14 +108,15 @@ export namespace Api {
     }
 
     export namespace Response {
-      export interface Body {
-        error?: string
-      }
+      export interface Success extends Network.SuccessState {}
+      export interface Error extends Network.ErrorState {}
+      export type Body = Success | Error
     }
   }
 
   export namespace Ping {
     export type Route = '/ping'
+    export type State = Network.State<Response.Body>
 
     export namespace Request {
       export interface Options {
@@ -99,10 +128,11 @@ export namespace Api {
     }
 
     export namespace Response {
-      export interface Body {
-        pong?: string
-        error?: string
+      export interface Success extends Network.SuccessState {
+        pong: string
       }
+      export interface Error extends Network.ErrorState {}
+      export type Body = Success | Error
     }
   }
 }

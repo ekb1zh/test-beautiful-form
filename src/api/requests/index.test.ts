@@ -13,17 +13,17 @@ describe('signUp', () => {
   const user = createRandomeUser()
 
   test('new user => should sign up', async () => {
-    const { token, error } = await signUp(user)
+    const response = (await signUp(user)) as Schema.Api.SignUp.Response.Success
 
-    expect(typeof token).toBe('string')
-    expect(typeof error).toBe('undefined')
+    expect(response.status).toBe('success')
+    expect(typeof response.token).toBe('string')
   })
 
   test('exist user => should not sign up', async () => {
-    const { token, error } = await signUp(user)
+    const response = (await signUp(user)) as Schema.Api.SignUp.Response.Error
 
-    expect(typeof token).toBe('undefined')
-    expect(typeof error).toBe('string')
+    expect(response.status).toBe('error')
+    expect(typeof response.message).toBe('string')
   })
 })
 
@@ -32,18 +32,18 @@ describe('signIn', () => {
     const user = createRandomeUser()
 
     await signUp(user)
-    const { token, error } = await signIn(user)
+    const response = (await signIn(user)) as Schema.Api.SignIn.Response.Success
 
-    expect(typeof token).toBe('string')
-    expect(typeof error).toBe('undefined')
+    expect(response.status).toBe('success')
+    expect(typeof response.token).toBe('string')
   })
 
   test('absent user => should not sign in', async () => {
     const user = createRandomeUser()
-    const { token, error } = await signIn(user)
+    const response = (await signIn(user)) as Schema.Api.SignIn.Response.Error
 
-    expect(typeof token).toBe('undefined')
-    expect(typeof error).toBe('string')
+    expect(response.status).toBe('error')
+    expect(typeof response.message).toBe('string')
   })
 })
 
@@ -51,17 +51,20 @@ describe('signOut', () => {
   test('exist user => should sign out', async () => {
     const user = createRandomeUser()
 
-    const { token } = await signUp(user)
-    const { error } = await signOut(token!)
+    const { token } = (await signUp(user)) as Schema.Api.SignUp.Response.Success
+    const response = (await signOut(
+      token!,
+    )) as Schema.Api.SignOut.Response.Success
 
-    expect(typeof error).toBe('undefined')
+    expect(response.status).toBe('success')
   })
 
   test('absent user => should not sign out', async () => {
     const token = String(Math.random())
-    const { error } = await signOut(token)
+    const response = (await signOut(token)) as Schema.Api.SignOut.Response.Error
 
-    expect(typeof error).toBe('string')
+    expect(response.status).toBe('error')
+    expect(typeof response.message).toBe('string')
   })
 })
 
@@ -69,16 +72,18 @@ describe('ping', () => {
   test('exist user => should ping', async () => {
     const user = createRandomeUser()
 
-    const { token } = await signUp(user)
-    const { error } = await ping(token!)
+    const { token } = (await signUp(user)) as Schema.Api.SignUp.Response.Success
+    const response = (await ping(token!)) as Schema.Api.Ping.Response.Success
 
-    expect(typeof error).toBe('undefined')
+    expect(response.status).toBe('success')
+    expect(typeof response.pong).toBe('string')
   })
 
   test('absent user => should not ping', async () => {
     const token = String(Math.random())
-    const { error } = await ping(token)
+    const response = (await ping(token)) as Schema.Api.Ping.Response.Error
 
-    expect(typeof error).toBe('string')
+    expect(response.status).toBe('error')
+    expect(typeof response.message).toBe('string')
   })
 })

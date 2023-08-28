@@ -14,11 +14,13 @@ export const ping = (headers: HeadersInit): Schema.Api.Ping.Response.Body => {
     const pong = generateString(6)
 
     return {
+      status: 'success',
       pong,
     }
-  } catch (error: any) {
+  } catch (error) {
     return {
-      error: error?.message || `Internal server error`,
+      status: 'error',
+      message: error instanceof Error ? error.message : `Internal server error`,
     }
   }
 }

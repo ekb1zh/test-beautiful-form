@@ -4,65 +4,90 @@ import Button from 'src/components/Button'
 import LinkButton from 'src/components/LinkButton'
 
 import { useGlobalContext } from 'src/context'
-import { signOut, ping } from 'src/api'
+import { signOut, ping, Schema } from 'src/api'
 import styles from 'src/pages/UserPage/UserPage.module.scss'
 
 const UserPage: React.FC = () => {
-  const [{ user, token }, setContext] = useGlobalContext()
-  const [pongMessage, setPongMessage] = useState<string | null>(null)
-  const [isSignOutLoading, setIsSignOutLoading] = useState(false)
-  const [isPingLoading, setIsPingLoading] = useState(false)
+  const [context, setContext] = useGlobalContext()
 
-  const onClickSignOutButton = async () => {
-    setIsSignOutLoading(true)
+  const [pingState, setPingState] = useState<Schema.Api.Ping.State>({
+    status: 'idle',
+  })
+  const [signOutState, setSignOutState] = useState<Schema.Api.SignOut.State>({
+    status: 'idle',
+  })
+  const [pongMessage, setPongMessage] = useState<string>()
 
+  const onClickPingButton = async () => {
     try {
-      const { error } = await signOut(token!)
-      if (error) {
-        throw new Error(error)
+      if (context.page !== 'user') {
+        setContext({ page: 'auth' })
+        throw new Error(`Unexpected page: ${context.page}`)
       }
 
-      setContext((draft) => {
-        delete draft.token
-        delete draft.user
-      })
+      setPingState({ status: 'loading' })
+      const response = await ping(context.token)
+      setPingState(response)
+
+      if (response.status === 'success') {
+        setPongMessage(response.pong)
+      }
     } catch (error) {
+      setPingState({
+        status: 'error',
+        message: error instanceof Error ? error.message : String(error),
+      })
+
       console.error(error)
-    } finally {
-      setIsSignOutLoading(false)
     }
   }
 
-  const onClickPingButton = async () => {
-    setIsPingLoading(true)
-
+  const onClickSignOutButton = async () => {
     try {
-      const { pong, error } = await ping(token!)
-      if (error) {
-        throw new Error(error)
+      if (context.page !== 'user') {
+        setContext({ page: 'auth' })
+        throw new Error(`Unexpected page: ${context.page}`)
       }
 
-      setPongMessage(pong!)
+      setSignOutState({ status: 'loading' })
+      const response = await signOut(context.token)
+      setSignOutState(response)
+
+      if (response.status === 'success') {
+        setContext({ page: 'auth' })
+      }
     } catch (error) {
+      setSignOutState({
+        status: 'error',
+        message: error instanceof Error ? error.message : String(error),
+      })
+
       console.error(error)
-    } finally {
-      setIsPingLoading(false)
     }
   }
 
   const infoItems = useMemo(() => {
-    const items = [
-      ['Email', user?.email],
-      ['Password', user?.password],
-      ['Token', token],
-    ]
+    if (context.page === 'user') {
+      const {
+        user: { email, password },
+        token,
+      } = context
 
-    if (typeof pongMessage === 'string') {
-      items.push(['Pong message', pongMessage])
+      const items = [
+        ['Email', email],
+        ['Password', password],
+        ['Token', token],
+      ]
+
+      if (typeof pongMessage === 'string') {
+        items.push(['Pong message', pongMessage])
+      }
+
+      return items
+    } else {
+      return []
     }
-
-    return items
-  }, [pongMessage, token, user?.email, user?.password])
+  }, [context, pongMessage])
 
   useEffect(() => {
     document.title = 'User'
@@ -83,15 +108,17 @@ const UserPage: React.FC = () => {
       <div className={styles.Footer}>
         <Button
           onClick={onClickPingButton}
-          loading={isPingLoading}
-          disabled={isSignOutLoading}
+          loading={pingState.status === 'loading'}
+          disabled={signOutState.status === 'loading'}
         >
           Ping
         </Button>
 
         <LinkButton
           onClick={onClickSignOutButton}
-          disabled={isPingLoading || isSignOutLoading}
+          disabled={
+            pingState.status === 'loading' || signOutState.status === 'loading'
+          }
         >
           Sign out
         </LinkButton>

@@ -34,9 +34,9 @@ const defaultValues: FormValues = {
 
 const SignUpForm: React.FC = () => {
   const [, setContext] = useGlobalContext()
-
-  const [isLoading, setIsLoading] = useState(false)
-  const [responseError, setResponseError] = useState<string | null>(null)
+  const [signUpState, setSignUpState] = useState<Schema.Api.SignUp.State>({
+    status: 'idle',
+  })
 
   const {
     watch,
@@ -54,29 +54,31 @@ const SignUpForm: React.FC = () => {
     }
 
     try {
-      setIsLoading(true)
+      setSignUpState({ status: 'loading' })
 
       const user: Schema.User = { email, password }
-      const { token, error } = await signUp(user)
+      const response = await signUp(user)
+      setSignUpState(response)
 
-      if (error) {
-        throw new Error(error)
+      if (response.status === 'success') {
+        setContext({
+          page: 'user',
+          user,
+          token: response.token,
+        })
       }
-
-      setContext((draft) => {
-        draft.token = token
-        draft.user = user
-      })
     } catch (error) {
+      setSignUpState({
+        status: 'error',
+        message: error instanceof Error ? error.message : String(error),
+      })
+
       console.error(error)
-      setResponseError(error instanceof Error ? error?.message : String(error))
-    } finally {
-      setIsLoading(false)
     }
   }
 
   useEffect(() => {
-    const subscription = watch(() => setResponseError(null))
+    const subscription = watch(() => setSignUpState({ status: 'idle' }))
     return () => subscription.unsubscribe()
   }, [watch])
 
@@ -113,14 +115,14 @@ const SignUpForm: React.FC = () => {
         <div className={styles.SubmitContainer}>
           <Button
             type='submit'
-            loading={isLoading}
+            loading={signUpState.status === 'loading'}
             disabled={isSubmitted && !isValid}
           >
             Sing Up
           </Button>
 
-          {responseError && (
-            <p className={styles.ErrorMessage}>{responseError}</p>
+          {signUpState.status === 'error' && (
+            <p className={styles.ErrorMessage}>{signUpState.message}</p>
           )}
         </div>
       </fieldset>

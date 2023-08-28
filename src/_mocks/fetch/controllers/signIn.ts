@@ -26,11 +26,13 @@ export const signIn = (body: BodyInit): Schema.Api.SignIn.Response.Body => {
     storage.write(data)
 
     return {
+      status: 'success',
       token,
     }
-  } catch (error: any) {
+  } catch (error) {
     return {
-      error: error?.message || `Internal server error`,
+      status: 'error',
+      message: error instanceof Error ? error.message : `Internal server error`,
     }
   }
 }

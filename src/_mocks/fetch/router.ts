@@ -23,7 +23,8 @@ export const router = (
 
     default:
       return {
-        error: `Unknown url ${url}`,
+        status: 'error',
+        message: `Unknown url ${url}`,
       }
   }
 }
