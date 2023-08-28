@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 
 import styles from 'src/components/Button/Button.module.scss'
 import type * as T from 'src/components/Button/types'
 
-const Button: React.FC<React.PropsWithChildren<T.ButtonProps>> = ({
-  children,
-  type = 'button',
-  disabled,
-  loading,
-  onClick,
-}) => {
+const Button = forwardRef<
+  HTMLButtonElement,
+  React.PropsWithChildren<T.ButtonProps>
+>(({ children, type = 'button', disabled, loading, onClick }, ref) => {
   return (
     <button
+      ref={ref}
       type={type}
       className={styles.Root}
       onClick={onClick}
@@ -21,6 +19,6 @@ const Button: React.FC<React.PropsWithChildren<T.ButtonProps>> = ({
       {loading && <div className={styles.Loader} />}
     </button>
   )
-}
+})
 
 export default Button
