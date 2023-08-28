@@ -53,7 +53,7 @@ describe('signOut', () => {
 
     const { token } = (await signUp(user)) as Schema.Api.SignUp.Response.Success
     const response = (await signOut(
-      token!,
+      token,
     )) as Schema.Api.SignOut.Response.Success
 
     expect(response.status).toBe('success')
@@ -73,7 +73,7 @@ describe('ping', () => {
     const user = createRandomeUser()
 
     const { token } = (await signUp(user)) as Schema.Api.SignUp.Response.Success
-    const response = (await ping(token!)) as Schema.Api.Ping.Response.Success
+    const response = (await ping(token)) as Schema.Api.Ping.Response.Success
 
     expect(response.status).toBe('success')
     expect(typeof response.pong).toBe('string')
