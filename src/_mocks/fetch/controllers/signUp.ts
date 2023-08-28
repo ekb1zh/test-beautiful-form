@@ -26,7 +26,7 @@ export const signUp = (body: BodyInit): Schema.Api.SignUp.Response.Body => {
   } catch (error) {
     return {
       status: 'error',
-      message: error instanceof Error ? error.message : `Internal server error`,
+      message: error instanceof Error ? error.message : String(error),
     }
   }
 }
