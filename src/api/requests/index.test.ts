@@ -15,15 +15,19 @@ describe('signUp', () => {
   test('new user => should sign up', async () => {
     const response = (await signUp(user)) as Schema.Api.SignUp.Response.Success
 
-    expect(response.status).toBe('success')
-    expect(typeof response.token).toBe('string')
+    expect(response).toStrictEqual<Schema.Api.SignUp.Response.Success>({
+      status: 'success',
+      token: expect.any(String),
+    })
   })
 
   test('exist user => should not sign up', async () => {
     const response = (await signUp(user)) as Schema.Api.SignUp.Response.Error
 
-    expect(response.status).toBe('error')
-    expect(typeof response.message).toBe('string')
+    expect(response).toStrictEqual<Schema.Api.SignUp.Response.Error>({
+      status: 'error',
+      message: expect.any(String),
+    })
   })
 })
 
@@ -34,16 +38,20 @@ describe('signIn', () => {
     await signUp(user)
     const response = (await signIn(user)) as Schema.Api.SignIn.Response.Success
 
-    expect(response.status).toBe('success')
-    expect(typeof response.token).toBe('string')
+    expect(response).toStrictEqual<Schema.Api.SignIn.Response.Success>({
+      status: 'success',
+      token: expect.any(String),
+    })
   })
 
   test('absent user => should not sign in', async () => {
     const user = createRandomeUser()
     const response = (await signIn(user)) as Schema.Api.SignIn.Response.Error
 
-    expect(response.status).toBe('error')
-    expect(typeof response.message).toBe('string')
+    expect(response).toStrictEqual<Schema.Api.SignIn.Response.Error>({
+      status: 'error',
+      message: expect.any(String),
+    })
   })
 })
 
@@ -56,15 +64,19 @@ describe('signOut', () => {
       token,
     )) as Schema.Api.SignOut.Response.Success
 
-    expect(response.status).toBe('success')
+    expect(response).toStrictEqual<Schema.Api.SignOut.Response.Success>({
+      status: 'success',
+    })
   })
 
   test('absent user => should not sign out', async () => {
     const token = String(Math.random())
     const response = (await signOut(token)) as Schema.Api.SignOut.Response.Error
 
-    expect(response.status).toBe('error')
-    expect(typeof response.message).toBe('string')
+    expect(response).toStrictEqual<Schema.Api.SignOut.Response.Error>({
+      status: 'error',
+      message: expect.any(String),
+    })
   })
 })
 
@@ -75,15 +87,19 @@ describe('ping', () => {
     const { token } = (await signUp(user)) as Schema.Api.SignUp.Response.Success
     const response = (await ping(token)) as Schema.Api.Ping.Response.Success
 
-    expect(response.status).toBe('success')
-    expect(typeof response.pong).toBe('string')
+    expect(response).toStrictEqual<Schema.Api.Ping.Response.Success>({
+      status: 'success',
+      pong: expect.any(String),
+    })
   })
 
   test('absent user => should not ping', async () => {
     const token = String(Math.random())
     const response = (await ping(token)) as Schema.Api.Ping.Response.Error
 
-    expect(response.status).toBe('error')
-    expect(typeof response.message).toBe('string')
+    expect(response).toStrictEqual<Schema.Api.Ping.Response.Error>({
+      status: 'error',
+      message: expect.any(String),
+    })
   })
 })
