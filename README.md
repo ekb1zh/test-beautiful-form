@@ -108,6 +108,6 @@ The OOP style is used in the following cases:
 
 The project uses [recommendations from the official TypeScript documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces).
 
-### Code review
+### Code checks
 
 The `.lintstagedrc.mjs` file describes the checks that are performed before each commit 🛡💪
