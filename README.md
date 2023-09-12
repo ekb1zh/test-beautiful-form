@@ -102,7 +102,7 @@ Almost all code is written in FP style.
 The OOP style is used in the following cases:
 
 - If the tool involves creating instances with internal state, and methods to manage this state.
-- If OOP features are required that are not in the OP.
+- If OOP features are required that are not in the FP.
 
 ### Interface and type
 
