@@ -41,7 +41,6 @@ const UserPage: React.FC = () => {
 
   const infoItems = useMemo(() => {
     const { token } = context
-
     const items = [['Token', token]]
 
     if (typeof data?.pong === 'string') {

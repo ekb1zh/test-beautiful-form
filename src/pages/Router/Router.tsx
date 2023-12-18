@@ -11,15 +11,23 @@ const Router: React.FC = () => {
   const router = useMemo(() => {
     switch (page) {
       case 'user':
-        return <UserPage />
+        return (
+          <Layout>
+            <UserPage />
+          </Layout>
+        )
 
       case 'auth':
       default:
-        return <AuthPage />
+        return (
+          <Layout>
+            <AuthPage />
+          </Layout>
+        )
     }
   }, [page])
 
-  return <Layout>{router}</Layout>
+  return router
 }
 
 export default Router
