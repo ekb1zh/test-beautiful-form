@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -6,8 +6,9 @@ import * as yup from 'yup'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 
-import { useGlobalContext } from 'src/context'
-import { signIn, Schema } from 'src/api'
+import { useGlobalContext } from 'src/contexts/global'
+import { useSignIn } from 'src/api/front'
+import { Schema } from 'src/api/schema'
 import styles from 'src/pages/AuthPage/forms/Form.module.scss'
 
 interface FormValues {
@@ -27,12 +28,9 @@ const defaultValues: FormValues = {
 
 const SignInForm: React.FC = () => {
   const [, setContext] = useGlobalContext()
-  const [signInState, setSignInState] = useState<Schema.Api.SignIn.State>({
-    status: 'idle',
-  })
+  const { mutateAsync, isPending, isError, error } = useSignIn()
 
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
@@ -47,33 +45,17 @@ const SignInForm: React.FC = () => {
     }
 
     try {
-      setSignInState({ status: 'loading' })
-
       const user: Schema.User = formValues
-      const response = await signIn(user)
-      setSignInState(response)
+      const { token } = await mutateAsync(user)
 
-      if (response.status === 'success') {
-        setContext({
-          page: 'user',
-          user,
-          token: response.token,
-        })
-      }
-    } catch (error) {
-      setSignInState({
-        status: 'error',
-        message: error instanceof Error ? error.message : String(error),
+      setContext({
+        page: 'user',
+        token,
       })
-
+    } catch (error) {
       console.error(error)
     }
   }
-
-  useEffect(() => {
-    const subscription = watch(() => setSignInState({ status: 'idle' }))
-    return () => subscription.unsubscribe()
-  }, [watch])
 
   return (
     <form
@@ -101,15 +83,13 @@ const SignInForm: React.FC = () => {
         <div className={styles.SubmitContainer}>
           <Button
             type='submit'
-            loading={signInState.status === 'loading'}
+            loading={isPending}
             disabled={isSubmitted && !isValid}
           >
             Sing In
           </Button>
 
-          {signInState.status === 'error' && (
-            <p className={styles.ErrorMessage}>{signInState.message}</p>
-          )}
+          {isError && <p className={styles.ErrorMessage}>{error.error}</p>}
         </div>
       </fieldset>
     </form>

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 
 import styles from 'src/components/Button/Button.module.scss'
-import type * as T from 'src/components/Button/types'
+import * as T from 'src/components/Button/types'
 
 const Button = forwardRef<
   HTMLButtonElement,

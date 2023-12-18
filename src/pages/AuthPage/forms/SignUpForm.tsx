@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -6,8 +6,9 @@ import * as yup from 'yup'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 
-import { useGlobalContext } from 'src/context'
-import { signUp, Schema } from 'src/api'
+import { useGlobalContext } from 'src/contexts/global'
+import { useSignUp } from 'src/api/front'
+import { Schema } from 'src/api/schema'
 import styles from 'src/pages/AuthPage/forms/Form.module.scss'
 
 interface FormValues {
@@ -34,12 +35,9 @@ const defaultValues: FormValues = {
 
 const SignUpForm: React.FC = () => {
   const [, setContext] = useGlobalContext()
-  const [signUpState, setSignUpState] = useState<Schema.Api.SignUp.State>({
-    status: 'idle',
-  })
+  const { mutateAsync, isPending, isError, error } = useSignUp()
 
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
@@ -48,39 +46,23 @@ const SignUpForm: React.FC = () => {
     defaultValues,
   })
 
-  const onSubmit = async ({ email, password }: FormValues) => {
+  const onSubmit = async ({ repeatPassword: _, ...formValues }: FormValues) => {
     if (!isValid) {
       return
     }
 
     try {
-      setSignUpState({ status: 'loading' })
+      const user: Schema.User = formValues
+      const { token } = await mutateAsync(user)
 
-      const user: Schema.User = { email, password }
-      const response = await signUp(user)
-      setSignUpState(response)
-
-      if (response.status === 'success') {
-        setContext({
-          page: 'user',
-          user,
-          token: response.token,
-        })
-      }
-    } catch (error) {
-      setSignUpState({
-        status: 'error',
-        message: error instanceof Error ? error.message : String(error),
+      setContext({
+        page: 'user',
+        token,
       })
-
+    } catch (error) {
       console.error(error)
     }
   }
-
-  useEffect(() => {
-    const subscription = watch(() => setSignUpState({ status: 'idle' }))
-    return () => subscription.unsubscribe()
-  }, [watch])
 
   return (
     <form
@@ -115,15 +97,13 @@ const SignUpForm: React.FC = () => {
         <div className={styles.SubmitContainer}>
           <Button
             type='submit'
-            loading={signUpState.status === 'loading'}
+            loading={isPending}
             disabled={isSubmitted && !isValid}
           >
             Sing Up
           </Button>
 
-          {signUpState.status === 'error' && (
-            <p className={styles.ErrorMessage}>{signUpState.message}</p>
-          )}
+          {isError && <p className={styles.ErrorMessage}>{error.error}</p>}
         </div>
       </fieldset>
     </form>

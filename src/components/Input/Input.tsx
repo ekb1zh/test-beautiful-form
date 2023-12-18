@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 import Icon from 'src/components/Icon'
 import styles from 'src/components/Input/Input.module.scss'
-import type * as T from 'src/components/Input/types'
+import * as T from 'src/components/Input/types'
 
 const Input = forwardRef<HTMLDivElement, T.InputProps>(
   ({ label, type, errorText, disabled, ...other }, rootRef) => {

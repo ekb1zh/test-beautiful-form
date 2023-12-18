@@ -1,5 +1,13 @@
-import { fetch } from 'src/_mocks'
+import { mockFetch } from 'src/api/back'
+
+let isInitialized = false
 
 export const applyMocks = () => {
-  window.fetch = fetch
+  if (isInitialized) {
+    return
+  }
+
+  window.fetch = mockFetch
+
+  isInitialized = true
 }
