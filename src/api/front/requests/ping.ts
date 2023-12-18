@@ -1,4 +1,5 @@
 import { Schema } from 'src/api/schema'
+import { FetchError } from 'src/utils/FetchError'
 
 export const ping = async (
   token: Schema.Token,
@@ -20,6 +21,6 @@ export const ping = async (
   if (response.ok) {
     return responseBody
   } else {
-    throw responseBody
+    throw new FetchError(responseBody)
   }
 }

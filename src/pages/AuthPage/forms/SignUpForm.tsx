@@ -103,7 +103,9 @@ const SignUpForm: React.FC = () => {
             Sing Up
           </Button>
 
-          {isError && <p className={styles.ErrorMessage}>{error.error}</p>}
+          {isError && (
+            <p className={styles.ErrorMessage}>{error.responseBody.error}</p>
+          )}
         </div>
       </fieldset>
     </form>

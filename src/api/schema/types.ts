@@ -48,8 +48,6 @@ export namespace Api {
           headers: { 'Content-Type': 'application/json' }
         }
       }
-
-      export type Body = Success.Body | Error.Body
     }
   }
 
@@ -90,8 +88,6 @@ export namespace Api {
           headers: { 'Content-Type': 'application/json' }
         }
       }
-
-      export type Body = Success.Body | Error.Body
     }
   }
 
@@ -129,8 +125,6 @@ export namespace Api {
           headers: { 'Content-Type': 'application/json' }
         }
       }
-
-      export type Body = Success.Body | Error.Body
     }
   }
 
@@ -171,8 +165,6 @@ export namespace Api {
           headers: { 'Content-Type': 'application/json' }
         }
       }
-
-      export type Body = Success.Body | Error.Body
     }
   }
 }

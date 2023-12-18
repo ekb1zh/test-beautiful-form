@@ -1,4 +1,5 @@
 import { Schema } from 'src/api/schema'
+import { FetchError } from 'src/utils/FetchError'
 
 export const signOut = async (
   token: Schema.Token,
@@ -22,6 +23,6 @@ export const signOut = async (
     const responseBody: Schema.Api.SignOut.Response.Error.Body =
       await response.json()
 
-    throw responseBody
+    throw new FetchError(responseBody)
   }
 }

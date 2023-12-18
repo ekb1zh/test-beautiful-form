@@ -1,6 +1,7 @@
 import { mockFetch } from 'src/api/back'
 import { signUp, signIn, signOut, ping } from 'src/api/front/requests'
 import { Schema } from 'src/api/schema'
+import { FetchError } from 'src/utils/FetchError'
 
 const createRandomUser = (): Schema.User => ({
   email: String(Math.random()),
@@ -24,15 +25,19 @@ describe('signUp', () => {
   })
 
   test('exist user => should not sign up', async () => {
-    let body: Schema.Api.SignUp.Response.Error.Body | undefined
+    let fetchError:
+      | FetchError<Schema.Api.SignUp.Response.Error.Body>
+      | undefined
 
     try {
       await signUp(user)
     } catch (error: any) {
-      body = error
+      fetchError = error
     }
 
-    expect(body).toStrictEqual<Schema.Api.SignUp.Response.Error.Body>({
+    expect(
+      fetchError?.responseBody,
+    ).toStrictEqual<Schema.Api.SignUp.Response.Error.Body>({
       error: expect.any(String),
     })
   })
@@ -55,15 +60,19 @@ describe('signIn', () => {
 
   test('absent user => should not sign in', async () => {
     const user = createRandomUser()
-    let body: Schema.Api.SignIn.Response.Error.Body | undefined
+    let fetchError:
+      | FetchError<Schema.Api.SignIn.Response.Error.Body>
+      | undefined
 
     try {
       await signIn(user)
     } catch (error: any) {
-      body = error
+      fetchError = error
     }
 
-    expect(body).toStrictEqual<Schema.Api.SignIn.Response.Error.Body>({
+    expect(
+      fetchError?.responseBody,
+    ).toStrictEqual<Schema.Api.SignIn.Response.Error.Body>({
       error: expect.any(String),
     })
   })
@@ -80,15 +89,19 @@ describe('signOut', () => {
 
   test('absent user => should not sign out', async () => {
     const token = String(Math.random())
-    let body: Schema.Api.SignOut.Response.Error.Body | undefined
+    let fetchError:
+      | FetchError<Schema.Api.SignOut.Response.Error.Body>
+      | undefined
 
     try {
       await signOut(token)
     } catch (error: any) {
-      body = error
+      fetchError = error
     }
 
-    expect(body).toStrictEqual<Schema.Api.SignOut.Response.Error.Body>({
+    expect(
+      fetchError?.responseBody,
+    ).toStrictEqual<Schema.Api.SignOut.Response.Error.Body>({
       error: expect.any(String),
     })
   })
@@ -107,15 +120,17 @@ describe('ping', () => {
 
   test('absent user => should not ping', async () => {
     const token = String(Math.random())
-    let body: Schema.Api.Ping.Response.Error.Body | undefined
+    let fetchError: FetchError<Schema.Api.Ping.Response.Error.Body> | undefined
 
     try {
       await ping(token)
     } catch (error: any) {
-      body = error
+      fetchError = error
     }
 
-    expect(body).toStrictEqual<Schema.Api.Ping.Response.Error.Body>({
+    expect(
+      fetchError?.responseBody,
+    ).toStrictEqual<Schema.Api.Ping.Response.Error.Body>({
       error: expect.any(String),
     })
   })
