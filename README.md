@@ -25,7 +25,7 @@ Launching the application
 npm start
 ```
 
-Running tests 🛡💪
+Running tests, lints and formatter 🛡💪
 
 ```bash
 npm test
@@ -80,7 +80,7 @@ All backend code is stored in the `_mocks` folder. The rest of the code belongs 
 
 Both the frontend and backend share `localStorage` to store data between user sessions. The `src/utils/LocalStorageItem` utility provides a wrapper that makes working with `localStorage` easier.
 
-The `src/api` folder contains the `Schema` type. This type describes a comprehensive contract about how the frontend interacts with the backend. Violation of the terms of the contract from any side will immediately lead to a compilation error of the project 🛡💪
+The `src/api/schema` folder contains types that describes a comprehensive contract about how the frontend interacts with the backend. Violation of the terms of the contract from any side will immediately lead to a compilation error of the project 🛡💪
 
 ### Error catching
 
