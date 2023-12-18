@@ -67,18 +67,11 @@ const UserPage: React.FC = () => {
       </ul>
 
       <div className={styles.Footer}>
-        <Button
-          onClick={onClickPingButton}
-          loading={isPingLoading}
-          disabled={isSignOutLoading}
-        >
+        <Button onClick={onClickPingButton} loading={isPingLoading}>
           Ping
         </Button>
 
-        <LinkButton
-          onClick={onClickSignOutButton}
-          disabled={isPingLoading || isSignOutLoading}
-        >
+        <LinkButton onClick={onClickSignOutButton} disabled={isSignOutLoading}>
           Sign out
         </LinkButton>
       </div>

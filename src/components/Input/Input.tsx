@@ -79,7 +79,10 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
     return (
       <div
         ref={rootRef}
-        className={clsx(styles.RootContainer, disabled && styles.disabled)}
+        className={clsx(
+          styles.RootContainer,
+          disabled && styles.RootContainer_disabled,
+        )}
       >
         <div className={styles.InnerContainer}>
           <input
@@ -88,7 +91,7 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
             id={id}
             className={clsx(
               styles.Input,
-              type === 'password' && styles.password,
+              type === 'password' && styles.Input_password,
             )}
             disabled={disabled}
             {...other}
@@ -99,10 +102,10 @@ const Input = forwardRef<HTMLDivElement, T.InputProps>(
               className={clsx(
                 styles.Label,
                 isFocused
-                  ? styles.small
+                  ? styles.Label_small
                   : isValueEmpty
-                  ? styles.big
-                  : styles.small,
+                  ? styles.Label_big
+                  : styles.Label_small,
               )}
               htmlFor={id}
             >

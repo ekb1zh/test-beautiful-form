@@ -5,8 +5,8 @@ $left-space: 12px;
 .RootContainer {
   opacity: 1;
 
-  &.disabled {
-    opacity: 0.5;
+  &_disabled {
+    opacity: 0.7;
   }
 }
 
@@ -22,7 +22,7 @@ $left-space: 12px;
   top: 8px;
   left: $left-space;
 
-  &.big {
+  &_big {
     top: 50%;
     transform: translate(0, -50%);
 
@@ -31,7 +31,7 @@ $left-space: 12px;
     cursor: text;
   }
 
-  &.small {
+  &_small {
     font-size: 0.8rem;
     color: black;
     cursor: default;
@@ -48,7 +48,7 @@ $left-space: 12px;
   background: rgb(255 255 255 / 50%);
   transition: $transition;
 
-  &.password {
+  &_password {
     padding-right: $eye-button-width;
   }
 

@@ -69,6 +69,7 @@ const SignInForm: React.FC = () => {
         <Input
           label='Email'
           type='text'
+          disabled={isPending}
           errorText={errors.email?.message}
           {...register('email')}
         />
@@ -76,6 +77,7 @@ const SignInForm: React.FC = () => {
         <Input
           label='Password'
           type='password'
+          disabled={isPending}
           errorText={errors.password?.message}
           {...register('password')}
         />
