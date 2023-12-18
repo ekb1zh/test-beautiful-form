@@ -74,13 +74,17 @@ If the folder is a module, then that folder includes an `index` file to define t
 
 ### Frontend and backend
 
-The project simultaneously includes the front-end code, as well as the minimum amount of code required to emulate the back-end.
+The project simultaneously includes the frontend code, as well as the minimum amount of code required to emulate the backend.
 
-All backend code is stored in the `_mocks` folder. The rest of the code belongs to the frontend.
+All API code is stored in `src/api` folder (`src/api/back` for backend, `api/front` for frontend).
+
+The `src/api/schema` folder contains types that describes a comprehensive contract about how the frontend interacts with the backend. Violation of the terms of the contract from any side will immediately lead to a compilation error of the project 🛡💪
 
 Both the frontend and backend share `localStorage` to store data between user sessions. The `src/utils/LocalStorageItem` utility provides a wrapper that makes working with `localStorage` easier.
 
-The `src/api/schema` folder contains types that describes a comprehensive contract about how the frontend interacts with the backend. Violation of the terms of the contract from any side will immediately lead to a compilation error of the project 🛡💪
+### Paths
+
+The project uses absolute paths.
 
 ### Error catching
 
