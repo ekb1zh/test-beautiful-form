@@ -23,6 +23,6 @@ export default {
     () => 'npm run lint:ts',
     () => 'npm run lint:styles',
     () => 'npm run test:once',
-    'prettier --ignore-unknown --write',
+    () => 'npm run lint:prettier:fix',
   ],
 }
