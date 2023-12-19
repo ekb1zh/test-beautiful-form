@@ -1,6 +1,6 @@
 ### Idea
 
-1. Implement an authentication form through mail and password.
+1. Implement an authentication form through email and password.
 2. Do not use component libraries.
 3. Mock [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch) to emulate server operation.
 4. Ensure the high speed of the application.
