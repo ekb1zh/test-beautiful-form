@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/test-beautiful-form/static/css/main.7660c971.css",
-    "main.js": "/test-beautiful-form/static/js/main.f514055a.js",
+    "main.css": "/test-beautiful-form/static/css/main.6dc7505e.css",
+    "main.js": "/test-beautiful-form/static/js/main.fac6926d.js",
     "static/media/main-background.jpg": "/test-beautiful-form/static/media/main-background.44cb27609a02674f14fe.jpg",
     "static/media/EyeOpen.svg": "/test-beautiful-form/static/media/EyeOpen.d3cfba4c2231fd6fff694412cface4b5.svg",
     "index.html": "/test-beautiful-form/index.html",
     "static/media/EyeClose.svg": "/test-beautiful-form/static/media/EyeClose.454084585669c554b85eafd80ccf34f6.svg",
-    "main.7660c971.css.map": "/test-beautiful-form/static/css/main.7660c971.css.map",
-    "main.f514055a.js.map": "/test-beautiful-form/static/js/main.f514055a.js.map"
+    "main.6dc7505e.css.map": "/test-beautiful-form/static/css/main.6dc7505e.css.map",
+    "main.fac6926d.js.map": "/test-beautiful-form/static/js/main.fac6926d.js.map"
   },
   "entrypoints": [
-    "static/css/main.7660c971.css",
-    "static/js/main.f514055a.js"
+    "static/css/main.6dc7505e.css",
+    "static/js/main.fac6926d.js"
   ]
 }
