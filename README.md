@@ -64,11 +64,11 @@ Styling tools.
 
 Naming of classes.
 
-Project uses implicit BEM.
+Project uses implicit [BEM](https://getbem.com/).
 
 - B (block) - `.scss` file name (adding automatically on the compile time).
-- E (element) - className defined on the top level of `.scss` file (`PascalCase` as like in examples in [create-react-app](https://create-react-app.dev/docs/adding-a-stylesheet/)).
-- M (modifier) - className nested inside of element (`camelCase`).
+- E (element) - className defined on the top level of `.scss` file (uses `PascalCase` as like [create-react-app](https://create-react-app.dev/docs/adding-a-stylesheet/) or [mui](https://mui.com/material-ui/customization/how-to-customize/#overriding-styles-with-class-names)).
+- M (modifier) - className nested inside of element (uses `camelCase`).
 - Hash - add automatically on the compile time.
 
 The result className will be looks like this:
