@@ -3,9 +3,9 @@
 1. Implement an authentication form through email and password.
 2. Do not use component libraries.
 3. Mock [fetch](https://developer.mozilla.org/en-US/docs/Web/API/fetch) to emulate server operation.
-4. Ensure the high speed of the application.
+4. Ensure high speed of the application.
 5. Ensure high reliability of the application 🛡💪
-6. Post the result on [GitHub Pages](https://create-react-app.dev/docs/deployment#github-pages).
+6. Deploy result on [GitHub Pages](https://create-react-app.dev/docs/deployment#github-pages).
 
 ### Result
 
@@ -30,8 +30,6 @@ Running tests, lints and formatter 🛡💪
 ```bash
 npm test
 ```
-
-> Tests is not fully implemented yet. Work continues.
 
 ### Application features
 
@@ -59,9 +57,9 @@ The main language of the project is [TypeScript](https://www.typescriptlang.org/
 
 Styling tools.
 
-- [Sass (SCSS)](https://create-react-app.dev/docs/adding-a-sass-stylesheet) for advanced syntax
-- [CSS modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet) for style encapsulation
-- [Clsx](https://github.com/lukeed/clsx) for combining classes
+- [Sass (SCSS)](https://create-react-app.dev/docs/adding-a-sass-stylesheet) for advanced syntax.
+- [CSS modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet) for style encapsulation.
+- [Clsx](https://github.com/lukeed/clsx) for combining classes.
 - [Inline styles](https://legacy.reactjs.org/docs/faq-styling.html#can-i-use-inline-styles) to add a style whose value can only be retrieved during application execution.
 
 Naming of classes.
