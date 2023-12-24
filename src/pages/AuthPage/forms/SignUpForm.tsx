@@ -17,7 +17,7 @@ interface FormValues {
   repeatPassword: string
 }
 
-const schema = yup.object({
+const schema: yup.ObjectSchema<FormValues> = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(8).required(),
   repeatPassword: yup
@@ -27,23 +27,21 @@ const schema = yup.object({
     .required(),
 })
 
-const defaultValues: FormValues = {
-  email: '',
-  password: '',
-  repeatPassword: '',
-}
-
 const SignUpForm: React.FC = () => {
   const [, setContext] = useGlobalContext()
-  const { mutateAsync, isPending, isError, error } = useSignUp()
+  const { mutateAsync: signUp, isPending, isError, error } = useSignUp()
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
-  } = useForm({
-    resolver: yupResolver<FormValues>(schema),
-    defaultValues,
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+      repeatPassword: '',
+    },
   })
 
   const onSubmit = async ({ repeatPassword: _, ...formValues }: FormValues) => {
@@ -53,7 +51,7 @@ const SignUpForm: React.FC = () => {
 
     try {
       const user: Schema.User = formValues
-      const { token } = await mutateAsync(user)
+      const { token } = await signUp(user)
 
       setContext({
         page: 'user',

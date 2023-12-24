@@ -16,27 +16,25 @@ interface FormValues {
   password: string
 }
 
-const schema = yup.object({
+const schema: yup.ObjectSchema<FormValues> = yup.object({
   email: yup.string().email().required(),
   password: yup.string().min(8).required(),
 })
 
-const defaultValues: FormValues = {
-  email: '',
-  password: '',
-}
-
 const SignInForm: React.FC = () => {
   const [, setContext] = useGlobalContext()
-  const { mutateAsync, isPending, isError, error } = useSignIn()
+  const { mutateAsync: signIn, isPending, isError, error } = useSignIn()
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
-  } = useForm({
-    resolver: yupResolver<FormValues>(schema),
-    defaultValues,
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   })
 
   const onSubmit = async (formValues: FormValues) => {
@@ -46,7 +44,7 @@ const SignInForm: React.FC = () => {
 
     try {
       const user: Schema.User = formValues
-      const { token } = await mutateAsync(user)
+      const { token } = await signIn(user)
 
       setContext({
         page: 'user',
