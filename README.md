@@ -97,7 +97,7 @@ Both the frontend and backend share `localStorage` to store data between user se
 
 The project uses pattern `ui-logic`.
 
-Every component define `useLogic` hook with all logic of component. This hook prepare props for everithing inside of component file. This pattern make more simple read, refactoring and testing.
+Every component define `useLogic` hook with all logic of component. This hook prepare props for everything inside of component file. This pattern makes more simple read, refactoring and testing.
 
 ### Paths
 
