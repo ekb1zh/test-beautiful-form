@@ -87,7 +87,7 @@ If the folder is a module, then that folder includes an `index` file to define t
 
 The project simultaneously includes the frontend code, as well as the minimum amount of code required to emulate the backend.
 
-All API code is stored in `src/api` folder (`src/api/back` for backend, `api/front` for frontend).
+All API code is stored in `src/api` folder (`src/api/back` for backend, `src/api/front` for frontend).
 
 The `src/api/schema` folder contains types that describes a comprehensive contract about how the frontend interacts with the backend. Violation of the terms of the contract from any side will immediately lead to a compilation error of the project 🛡💪
 
