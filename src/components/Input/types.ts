@@ -1,6 +1,6 @@
 export interface InputProps
   extends Pick<
-    React.InputHTMLAttributes<HTMLInputElement>,
+    React.JSX.IntrinsicElements['input'],
     'value' | 'defaultValue' | 'onChange' | 'name' | 'disabled'
   > {
   label?: string

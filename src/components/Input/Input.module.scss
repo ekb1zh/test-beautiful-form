@@ -2,7 +2,7 @@ $transition: 0.2s;
 $eye-button-width: 56px;
 $left-space: 12px;
 
-.RootContainer {
+.Root {
   opacity: 1;
 
   &_disabled {
@@ -10,7 +10,7 @@ $left-space: 12px;
   }
 }
 
-.InnerContainer {
+.Container {
   width: 100%;
   position: relative;
 }

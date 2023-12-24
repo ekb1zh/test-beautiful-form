@@ -57,14 +57,25 @@ The main language of the project is [TypeScript](https://www.typescriptlang.org/
 
 ### Styles
 
-Styling tools
+Styling tools.
 
 - [Sass (SCSS)](https://create-react-app.dev/docs/adding-a-sass-stylesheet) for advanced syntax
 - [CSS modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet) for style encapsulation
 - [Clsx](https://github.com/lukeed/clsx) for combining classes
 - [Inline styles](https://legacy.reactjs.org/docs/faq-styling.html#can-i-use-inline-styles) to add a style whose value can only be retrieved during application execution.
 
-> For comparing, soon will be created a clone of this application using [styled-components](https://styled-components.com/).
+Naming of classes.
+
+Project uses implicit BEM.
+
+- B (block) - `.scss` file name (adding automatically on the compile time).
+- E (element) - className defined on the top level of `.scss` file (`PascalCase` as like in examples in [create-react-app](https://create-react-app.dev/docs/adding-a-stylesheet/)).
+- M (modifier) - className nested inside of element (`camelCase`).
+- Hash - add automatically on the compile time.
+
+The result className will be looks like this:
+
+`Input_Root_disabled__aw4S2`
 
 ### File structure
 
@@ -81,6 +92,12 @@ All API code is stored in `src/api` folder (`src/api/back` for backend, `api/fro
 The `src/api/schema` folder contains types that describes a comprehensive contract about how the frontend interacts with the backend. Violation of the terms of the contract from any side will immediately lead to a compilation error of the project 🛡💪
 
 Both the frontend and backend share `localStorage` to store data between user sessions. The `src/utils/LocalStorageItem` utility provides a wrapper that makes working with `localStorage` easier.
+
+### Split UI and logic.
+
+The project uses pattern `ui-logic`.
+
+Every component define `useLogic` hook with all logic of component. This hook prepare props for everithing inside of component file. This pattern make more simple read, refactoring and testing.
 
 ### Paths
 

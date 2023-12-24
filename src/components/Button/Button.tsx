@@ -1,22 +1,14 @@
-import React, { forwardRef } from 'react'
-
-import styles from 'src/components/Button/Button.module.scss'
+import { forwardRef } from 'react'
+import { useLogic } from 'src/components/Button/hooks'
 import * as T from 'src/components/Button/types'
 
-const Button = forwardRef<
-  HTMLButtonElement,
-  React.PropsWithChildren<T.ButtonProps>
->(({ children, type = 'button', disabled, loading, onClick }, ref) => {
+const Button = forwardRef<HTMLButtonElement, T.ButtonProps>((...args) => {
+  const { rootProps, loaderProps, children } = useLogic(...args)
+
   return (
-    <button
-      ref={ref}
-      type={type}
-      className={styles.Root}
-      onClick={onClick}
-      disabled={disabled || loading}
-    >
+    <button {...rootProps}>
       {children}
-      {loading && <div className={styles.Loader} />}
+      {loaderProps && <div {...loaderProps} />}
     </button>
   )
 })

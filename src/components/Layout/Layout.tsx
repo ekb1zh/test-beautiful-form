@@ -1,15 +1,15 @@
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
+import { useLogic } from 'src/components/Layout/hooks'
+import * as T from 'src/components/Layout/types'
 
-import styles from 'src/components/Layout/Layout.module.scss'
+const Layout = forwardRef<HTMLDivElement, T.LayoutProps>((...args) => {
+  const { rootProps, mainProps } = useLogic(...args)
 
-const Layout = forwardRef<HTMLDivElement, React.PropsWithChildren>(
-  ({ children }, ref) => {
-    return (
-      <div ref={ref} className={styles.Root}>
-        <main className={styles.Main}>{children}</main>
-      </div>
-    )
-  },
-)
+  return (
+    <div {...rootProps}>
+      <main {...mainProps} />
+    </div>
+  )
+})
 
 export default Layout
